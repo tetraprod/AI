@@ -7,6 +7,8 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Players chain `Power`, `Area`, and `Effect` tokens to cast spells.
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
+* The left and right triggers cast spells from the left and right arms.
+* At level 10, the left and right buttons unlock powerful double-effect attacks.
 * Character creation and local multiplayer are planned features.
 
 ## Building

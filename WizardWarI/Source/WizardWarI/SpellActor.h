@@ -5,6 +5,7 @@
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
 =======
+=======
 
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
@@ -34,6 +35,7 @@ public:
     class UProjectileMovementComponent* Movement;
 
 =======
+=======
 
 =======
 
@@ -48,6 +50,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* CastSound;
 
+=======
 =======
 
 =======

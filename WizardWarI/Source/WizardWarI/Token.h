@@ -16,6 +16,11 @@ class UToken : public UObject
 {
     GENERATED_BODY()
 public:
+    UToken();
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
+    ETokenType TokenType;
+
+=======
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     ETokenType TokenType;
 
@@ -37,6 +42,15 @@ public:
     /** Numerical radius/size for Area tokens */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     float AreaValue;
+
+    /** Small symbol string displayed on the token */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Visual")
+    FString Symbol;
+
+    /** Glow colour used when displaying the token */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Visual")
+    FLinearColor GlowColor;
+=======
 =======
 
 =======

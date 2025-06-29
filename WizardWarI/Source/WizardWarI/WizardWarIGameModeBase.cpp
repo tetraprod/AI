@@ -1,4 +1,50 @@
 #include "WizardWarIGameModeBase.h"
+#include "WizardPlayerState.h"
+#include "WizardSaveGame.h"
+#include "Kismet/GameplayStatics.h"
+#include "CastleHub.h"
+
+AWizardWarIGameModeBase::AWizardWarIGameModeBase()
+{
+    FRobeData TieDye;
+    TieDye.Name = TEXT("TieDye");
+    TieDye.TokenCost = 0;
+    AvailableRobes.Add(TieDye);
+
+    FRobeData Speedy;
+    Speedy.Name = TEXT("Speedy");
+    Speedy.TokenCost = 50;
+    Speedy.bSpeedy = true;
+    Speedy.AttackBonus = 0.f;
+    Speedy.ShieldBonus = 0.f;
+    AvailableRobes.Add(Speedy);
+
+    UShoutToken* Basic = NewObject<UShoutToken>();
+    Basic->DefaultMessage = TEXT("Hyaa!");
+    Basic->TokenCost = 5;
+    AvailableShouts.Add(Basic);
+
+    FEnvironmentEntry Dungeon;
+    Dungeon.Type = ECombatEnvironment::Dungeon;
+    AvailableEnvironments.Add(Dungeon);
+
+    FEnvironmentEntry Forest;
+    Forest.Type = ECombatEnvironment::Forest;
+    AvailableEnvironments.Add(Forest);
+
+    FEnvironmentEntry Island;
+    Island.Type = ECombatEnvironment::ShrinkingIsland;
+    AvailableEnvironments.Add(Island);
+
+    FEnvironmentEntry Colosseum;
+    Colosseum.Type = ECombatEnvironment::Colosseum;
+    AvailableEnvironments.Add(Colosseum);
+
+    FEnvironmentEntry Mountain;
+    Mountain.Type = ECombatEnvironment::MountainTop;
+    AvailableEnvironments.Add(Mountain);
+}
+=======
 =======
 
 =======
@@ -69,6 +115,7 @@ void AWizardWarIGameModeBase::ResolveBet(AWizardPlayerState* Winner, AWizardPlay
     PendingWager.Empty();
 }
 
+=======
 =======
 
 bool AWizardWarIGameModeBase::StartArenaBattle()
@@ -145,6 +192,7 @@ void AWizardWarIGameModeBase::ResolveDailyDeathmatch(AWizardPlayerState* Winner)
 
 =======
 =======
+=======
 
 void AWizardWarIGameModeBase::AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds)
 {
@@ -166,6 +214,99 @@ void AWizardWarIGameModeBase::AwardMatchXP(AWizardPlayerState* Player, float Mat
     Player->AddExperience(XP);
 }
 
+bool AWizardWarIGameModeBase::BuyHellHound(AWizardPlayerState* Player, UCompanionToken* Token)
+{
+    if (!Player || !Token)
+    {
+        return false;
+    }
+
+    if (Player->TokenInventory.Num() < Token->TokenCost)
+    {
+        return false;
+    }
+
+    Player->TokenInventory.RemoveAt(0, Token->TokenCost);
+    Player->OwnedHounds.AddUnique(Token->HoundClass);
+    return true;
+}
+
+bool AWizardWarIGameModeBase::BuyRobe(AWizardPlayerState* Player, const FRobeData& Robe)
+{
+    if (!Player)
+    {
+        return false;
+    }
+    if (Player->TokenInventory.Num() < Robe.TokenCost)
+    {
+        return false;
+    }
+
+    Player->TokenInventory.RemoveAt(0, Robe.TokenCost);
+    Player->OwnedRobes.AddUnique(Robe.Name);
+    return true;
+}
+
+const FRobeData* AWizardWarIGameModeBase::FindRobe(const FString& Name) const
+{
+    for (const FRobeData& Data : AvailableRobes)
+    {
+        if (Data.Name.Equals(Name))
+        {
+            return &Data;
+        }
+    }
+    return nullptr;
+}
+
+void AWizardWarIGameModeBase::EquipRobe(AWizardPlayerState* Player, const FString& RobeName)
+{
+    if (!Player || !Player->OwnedRobes.Contains(RobeName))
+    {
+        return;
+    }
+
+    Player->EquippedRobe = RobeName;
+
+    const FRobeData* Data = FindRobe(RobeName);
+    if (Data)
+    {
+        Player->RobeAttackBonus = Data->AttackBonus;
+        Player->RobeShieldBonus = Data->ShieldBonus;
+    }
+    else
+    {
+        Player->RobeAttackBonus = 0.f;
+        Player->RobeShieldBonus = 0.f;
+    }
+}
+
+bool AWizardWarIGameModeBase::BuyShoutAttack(AWizardPlayerState* Player, UShoutToken* Token)
+{
+    if (!Player || !Token)
+    {
+        return false;
+    }
+    if (Player->TokenInventory.Num() < Token->TokenCost)
+    {
+        return false;
+    }
+
+    Player->TokenInventory.RemoveAt(0, Token->TokenCost);
+    Player->OwnedShoutAttacks.AddUnique(Token);
+    return true;
+}
+
+void AWizardWarIGameModeBase::EquipShoutAttack(AWizardPlayerState* Player, UShoutToken* Token)
+{
+    if (!Player || !Token || !Player->OwnedShoutAttacks.Contains(Token))
+    {
+        return;
+    }
+    Player->EquippedShoutAttack = Token;
+}
+
+=======
 bool AWizardWarIGameModeBase::SavePlayer(AWizardPlayerState* Player, const FString& SlotName)
 {
     if (!Player)
@@ -181,6 +322,25 @@ bool AWizardWarIGameModeBase::SavePlayer(AWizardPlayerState* Player, const FStri
 
     SaveGame->Experience = Player->Experience;
     SaveGame->TokenInventory = Player->TokenInventory;
+    SaveGame->SkinColor = Player->Appearance.SkinColor;
+    SaveGame->HairColor = Player->Appearance.HairColor;
+    SaveGame->EyeColor = Player->Appearance.EyeColor;
+    SaveGame->Height = Player->Appearance.Height;
+    SaveGame->BodyType = Player->Appearance.BodyType;
+    SaveGame->HairStyle = Player->Appearance.HairStyle;
+    SaveGame->RobeName = Player->Appearance.RobeName;
+    SaveGame->RobeColor = Player->Appearance.RobeColor;
+    SaveGame->SpellLog = Player->SpellLog;
+    SaveGame->Achievements = Player->Achievements;
+    SaveGame->PreferredLanguage = Player->PreferredLanguage;
+    SaveGame->OwnedRobes = Player->OwnedRobes;
+    SaveGame->EquippedRobe = Player->EquippedRobe;
+    SaveGame->OwnedHounds = Player->OwnedHounds;
+    SaveGame->EquippedHound = Player->EquippedHound;
+    SaveGame->OwnedShoutAttacks = Player->OwnedShoutAttacks;
+    SaveGame->EquippedShoutAttack = Player->EquippedShoutAttack;
+    SaveGame->CustomTauntMessage = Player->CustomTauntMessage;
+=======
     SaveGame->SkinColor = Player->SkinColor;
     SaveGame->HairColor = Player->HairColor;
     SaveGame->Height = Player->Height;
@@ -205,6 +365,26 @@ bool AWizardWarIGameModeBase::LoadPlayer(AWizardPlayerState* Player, const FStri
 
         Player->Experience = SaveGame->Experience;
         Player->TokenInventory = SaveGame->TokenInventory;
+        Player->Appearance.SkinColor = SaveGame->SkinColor;
+        Player->Appearance.HairColor = SaveGame->HairColor;
+        Player->Appearance.EyeColor = SaveGame->EyeColor;
+        Player->Appearance.Height = SaveGame->Height;
+        Player->Appearance.BodyType = SaveGame->BodyType;
+        Player->Appearance.HairStyle = SaveGame->HairStyle;
+        Player->Appearance.RobeName = SaveGame->RobeName;
+        Player->Appearance.RobeColor = SaveGame->RobeColor;
+        Player->SpellLog = SaveGame->SpellLog;
+        Player->Achievements = SaveGame->Achievements;
+        Player->PreferredLanguage = SaveGame->PreferredLanguage;
+        Player->OwnedRobes = SaveGame->OwnedRobes;
+        Player->EquippedRobe = SaveGame->EquippedRobe;
+        EquipRobe(Player, SaveGame->EquippedRobe);
+        Player->OwnedHounds = SaveGame->OwnedHounds;
+        Player->EquippedHound = SaveGame->EquippedHound;
+        Player->OwnedShoutAttacks = SaveGame->OwnedShoutAttacks;
+        Player->EquippedShoutAttack = SaveGame->EquippedShoutAttack;
+        Player->CustomTauntMessage = SaveGame->CustomTauntMessage;
+=======
         Player->SkinColor = SaveGame->SkinColor;
         Player->HairColor = SaveGame->HairColor;
         Player->Height = SaveGame->Height;
@@ -214,6 +394,22 @@ bool AWizardWarIGameModeBase::LoadPlayer(AWizardPlayerState* Player, const FStri
     return false;
 }
 
+void AWizardWarIGameModeBase::SpawnRandomEnvironment()
+{
+    if (AvailableEnvironments.Num() == 0)
+    {
+        return;
+    }
+
+    int32 Index = FMath::RandRange(0, AvailableEnvironments.Num() - 1);
+    const FEnvironmentEntry& Entry = AvailableEnvironments[Index];
+    if (Entry.EnvironmentClass)
+    {
+        FActorSpawnParameters Params;
+        ActiveEnvironment = GetWorld()->SpawnActor<AActor>(Entry.EnvironmentClass, Params);
+    }
+}
+=======
 =======
 
 =======
@@ -229,12 +425,19 @@ void AWizardWarIGameModeBase::StartPlay()
     {
         UGameplayStatics::SpawnSound2D(this, MenuMusic);
     }
+    if (HomeCastleClass)
+    {
+        GetWorld()->SpawnActor<ACastleHub>(HomeCastleClass);
+    }
+    SpawnRandomEnvironment();
+=======
     if (GEngine)
     {
         // Lock the game to 60 FPS for smoother play
         GEngine->Exec(GetWorld(), TEXT("t.MaxFPS 60"));
     }
 }
+=======
 =======
 }
 

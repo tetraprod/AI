@@ -6,6 +6,10 @@
 #include "ShieldToken.h"
 #include "SpellEffectToken.h"
 
+=======
+#include "Kismet/KismetMathLibrary.h"
+
+
 AWizardCharacter::AWizardCharacter()
 {
     LeftSlotIndex = 0;
@@ -16,6 +20,10 @@ AWizardCharacter::AWizardCharacter()
     bLeftArmShield = false;
     bRightArmShield = false;
     ShieldDefenseBonus = 0.f;
+
+=======
+    LockedOpponent = nullptr;
+
 
     ShieldMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMesh"));
     ShieldMesh->SetupAttachment(RootComponent);
@@ -41,6 +49,20 @@ void AWizardCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     PlayerInputComponent->BindAction("XButton", IE_Pressed, this, &AWizardCharacter::SwitchLeftSlot);
     PlayerInputComponent->BindAction("YButton", IE_Pressed, this, &AWizardCharacter::SwitchRightSlot);
 }
+
+
+=======
+void AWizardCharacter::Tick(float DeltaSeconds)
+{
+    Super::Tick(DeltaSeconds);
+    if (LockedOpponent)
+    {
+        FRotator LookAtRot = UKismetMathLibrary::FindLookAtRotation(GetActorLocation(), LockedOpponent->GetActorLocation());
+        FRotator NewRot = FRotator(GetActorRotation().Pitch, LookAtRot.Yaw, GetActorRotation().Roll);
+        GetMesh()->SetWorldRotation(NewRot);
+    }
+}
+
 
 void AWizardCharacter::CastLeftArm()
 {
@@ -80,6 +102,10 @@ void AWizardCharacter::CastLeftArm()
             }
         }
         ApplySpellEffectMovement(Effect->EffectType);
+
+=======
+        PlayFacialExpression(Effect->FacialExpression);
+
     }
 }
 
@@ -121,6 +147,10 @@ void AWizardCharacter::CastRightArm()
             }
         }
         ApplySpellEffectMovement(Effect->EffectType);
+
+=======
+        PlayFacialExpression(Effect->FacialExpression);
+
     }
 }
 
@@ -215,3 +245,19 @@ void AWizardCharacter::ApplySpellEffectMovement(ESpellEffectType EffectType)
             break;
     }
 }
+
+=======
+
+void AWizardCharacter::SetOpponent(AActor* Opponent)
+{
+    LockedOpponent = Opponent;
+}
+
+void AWizardCharacter::PlayFacialExpression(UAnimMontage* Expression)
+{
+    if (Expression)
+    {
+        PlayAnimMontage(Expression);
+    }
+}
+

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI GUI Web</title>
+    <style>
+        body { font-family: sans-serif; max-width: 700px; margin: auto; padding: 20px; }
+        textarea { width: 100%; height: 100px; }
+        pre { background: #f0f0f0; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>AI GUI Web</h1>
+    <textarea id="prompt" placeholder="Enter a prompt..."></textarea>
+    <br>
+    <button id="generate">Generate</button>
+    <pre id="response"></pre>
+    <script>
+    document.getElementById('generate').addEventListener('click', async () => {
+        const prompt = document.getElementById('prompt').value;
+        if (!prompt) return;
+        document.getElementById('response').textContent = 'Generating...';
+        try {
+            const res = await fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+            const data = await res.json();
+            document.getElementById('response').textContent = data.response || '';
+        } catch (err) {
+            document.getElementById('response').textContent = 'Error: ' + err;
+        }
+    });
+    </script>
+</body>
+</html>

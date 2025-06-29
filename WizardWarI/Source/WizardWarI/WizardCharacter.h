@@ -6,9 +6,17 @@
 #include "LevitationToken.h"
 #include "ShieldToken.h"
 #include "SpellEffectToken.h"
+
 #include "Animation/AnimMontage.h"
 #include "Components/StaticMeshComponent.h"
 #include "Blueprint/UserWidget.h"
+=======
+
+=======
+#include "Animation/AnimMontage.h"
+
+#include "Components/StaticMeshComponent.h"
+
 #include "WizardCharacter.generated.h"
 
 UCLASS()
@@ -19,7 +27,15 @@ public:
     AWizardCharacter();
 
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
     virtual void Tick(float DeltaSeconds) override;
+
+=======
+
+=======
+    virtual void Tick(float DeltaSeconds) override;
+
+
 
     UFUNCTION()
     void CastLeftArm();
@@ -33,9 +49,12 @@ public:
     UFUNCTION()
     void CastRightArmPower();
 
+
     /** Open the character menu using the Menu button */
     UFUNCTION()
     void OpenCharacterMenu();
+
+=======
 
     /** Swap quick slot for the left arm (requires level >=5) */
     UFUNCTION()
@@ -48,8 +67,11 @@ public:
     /** Assign a token to a quick slot if unlocked */
     void AssignTokenToQuickSlot(UToken* Token, bool bLeftArm, int32 SlotIndex);
 
+
     /** Maximum quick slots available for the player's current level */
     int32 GetMaxArmSlots() const;
+
+=======
 
 
     /** Quick slot arrays unlocked at level 5 */
@@ -95,9 +117,14 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera")
     UCameraComponent* FirstPersonCamera;
 
+
     /** Widget class for the character menu */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="UI")
     TSubclassOf<class UUserWidget> CharacterMenuClass;
+
+=======
+
+=======
 
     /** Current opponent actor for keeping eyes locked */
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Facial")
@@ -111,10 +138,17 @@ public:
     UFUNCTION(BlueprintCallable, Category="Facial")
     void PlayFacialExpression(UAnimMontage* Expression);
 
+
 protected:
     /** Apply movement or posture changes for a spell effect */
     void ApplySpellEffectMovement(ESpellEffectType EffectType);
 
     /** Apply a spell reaction to the locked opponent */
     void ApplyOpponentEffect(ESpellEffectType EffectType);
+=======
+
+protected:
+    /** Apply movement or posture changes for a spell effect */
+    void ApplySpellEffectMovement(ESpellEffectType EffectType);
+
 };

@@ -41,6 +41,12 @@ The default language is English if an unknown code is provided.
 
 ## Wizard War I Skeleton
 
+
+=======
+
+=======
+
+
 A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support, including example input bindings for casting with each arm. The game is designed from a first-person perspective. Once players reach level five they can swap token quick slots using the `X` button for the left arm and `Y` for the right. See `WizardWarI/README.md` for build instructions.
 
 The project enables physics simulation for characters, spells and environmental objects so effects like power and area directly influence spell behavior.
@@ -48,14 +54,18 @@ The project enables physics simulation for characters, spells and environmental 
 Levitation tokens may be chained with power and area tokens. Once activated on an arm they cannot be swapped out for the rest of the match and increase movement speed based on the selected power token.
 Shield tokens likewise lock the chosen arm but surround the caster with a translucent barrier. Their damage reduction scales with the attached power token.
 
+
 Opponents react to elements: water spells freeze them in place, electricity knocks them down stunned, fire sets them ablaze and explosive spells send them flying with a big physics impulse.
 
 Press the controller's **Menu** button to open the character menu where you arrange quick-slot chains and manage a large token inventory. Each arm starts with three slots and gains three more every ten levels.
+
+=======
 
 Elemental effect tokens now cause subtle posture changes and small movement nudges when cast. Earth spells push the player slightly downward, air gently lifts them, fire prompts a short backward step, water slows briefly, electricity gives a small burst of speed and weapon summons perform a short lunge.
 Each effect also plays a short facial expression animation while the caster keeps their eyes locked on the opponent.
 
 An online multiplayer mode allows players to wager token chains against each other. A challenger can host a bet match with a set of tokens and another player may join if they can stake an identical chain. The winner receives all wagered tokens.
+
 
 For larger matches an **arena battle** mode supports up to twenty players. Each
 contestant adds their wager to a shared pool when joining. Anyone who survives
@@ -64,14 +74,29 @@ forfeit their stake, leaving it in the pool. Once per day the accumulated pool
 is offered in a fifty‑player deathmatch where the last wizard standing wins the
 entire hoard.
 
+=======
+
 Experience is earned based on how long each duel lasts. Time under thirty seconds awards one XP per second, while matches longer than thirty seconds double the gain and those past ninety seconds double it again. The level cap is 1000 with special titles at 666 and 777.
 
 Players can now design their wizard using a full character creation screen that includes size sliders, skin and hair colour pickers, eye colour selection, body type and hairstyle options.
 Reaching level 1000 grants automatic one-hit kills even in online matches, turning every duel into a quick draw.
 Each level also provides a small amount of additional damage resistance.
 Progress can be saved to a slot and loaded later through a basic save system.
+
+=======
+
+
 Spells now emit dynamic lighting that matches their element colour and intensity,
 enhancing shading when Lumen global illumination is enabled in your project.
 Spells also play positional surround sound effects for added immersion, and the
 main menu features the classic "In the Hall of the Mountain King" as background
 music.
+
+=======
+=======
+=======
+A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support. See `WizardWarI/README.md` for build instructions.
+
+
+
+

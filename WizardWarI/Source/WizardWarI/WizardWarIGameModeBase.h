@@ -2,14 +2,20 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 
+=======
+
+
 #include "Sound/SoundBase.h"
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
+
+=======
 =======
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
+
 
 
 class AWizardPlayerState;
@@ -30,6 +36,23 @@ public:
     UFUNCTION(BlueprintCallable, Category="Multiplayer")
     void ResolveBet(AWizardPlayerState* Winner, AWizardPlayerState* Loser);
 
+
+    /** Begin a multiplayer arena battle for up to twenty players */
+    UFUNCTION(BlueprintCallable, Category="Arena")
+    bool StartArenaBattle();
+
+    /** Join the active arena battle with a set of wagered tokens */
+    UFUNCTION(BlueprintCallable, Category="Arena")
+    bool JoinArenaBattle(AWizardPlayerState* Player, const TArray<UToken*>& Tokens);
+
+    /** End the arena battle and reward surviving players */
+    UFUNCTION(BlueprintCallable, Category="Arena")
+    void EndArenaBattle(const TArray<AWizardPlayerState*>& Survivors);
+
+    /** Award the accumulated pool to the winner of the daily deathmatch */
+    UFUNCTION(BlueprintCallable, Category="Arena")
+    void ResolveDailyDeathmatch(AWizardPlayerState* Winner);
+=======
     /** Grant experience based on match duration */
     UFUNCTION(BlueprintCallable, Category="Gameplay")
     void AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds);
@@ -74,6 +97,7 @@ public:
     UFUNCTION(BlueprintCallable, Category="Multiplayer")
     void ResolveBet(AWizardPlayerState* Winner, AWizardPlayerState* Loser);
 
+
     /** Grant experience based on match duration */
     UFUNCTION(BlueprintCallable, Category="Gameplay")
     void AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds);
@@ -85,6 +109,9 @@ public:
     /** Load the given player's state from a slot */
     UFUNCTION(BlueprintCallable, Category="Save")
     bool LoadPlayer(AWizardPlayerState* Player, const FString& SlotName);
+
+
+=======
 
 
     virtual void StartPlay() override;
@@ -93,7 +120,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* MenuMusic;
 
+
 =======
+=======
+
 
 protected:
     /** Pending host waiting for a challenger */
@@ -104,11 +134,29 @@ protected:
     UPROPERTY()
     TArray<UToken*> PendingWager;
 
+
+    /** Active arena state */
+    UPROPERTY()
+    bool bArenaActive = false;
+
+    /** Start time of the current arena match */
+    UPROPERTY()
+    float ArenaStartTime = 0.f;
+
+    /** All players participating in the arena */
+    UPROPERTY()
+    TArray<AWizardPlayerState*> ArenaPlayers;
+
+    /** Token pool accumulated from arena wagers */
+    UPROPERTY()
+    TArray<UToken*> ArenaPool;
+=======
 =======
 =======
 class AWizardWarIGameModeBase : public AGameModeBase
 {
     GENERATED_BODY()
+
 
 
 

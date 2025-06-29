@@ -3,11 +3,16 @@
 #include "GameFramework/Actor.h"
 #include "SpellEffectToken.h"
 
+#include "Components/PointLightComponent.h"
+#include "Sound/SoundBase.h"
+=======
+
 =======
 
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
 =======
+
 
 
 #include "SpellActor.generated.h"
@@ -28,6 +33,9 @@ public:
 
 =======
 
+=======
+
+
     /** Dynamic light that follows the spell for improved visuals */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     class UPointLightComponent* Light;
@@ -36,6 +44,8 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* CastSound;
 
+
+=======
 =======
 
 

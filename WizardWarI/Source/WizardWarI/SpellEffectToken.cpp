@@ -7,7 +7,11 @@ USpellEffectToken::USpellEffectToken()
     Gesture = nullptr;
     Posture = nullptr;
 
+    FacialExpression = nullptr;
+=======
+
 =======
     FacialExpression = nullptr;
+
 
 }

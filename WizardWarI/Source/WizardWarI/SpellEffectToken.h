@@ -12,7 +12,15 @@ enum class ESpellEffectType : uint8
     Fire,
     Water,
     Electricity,
+
+    Weapon,
+    /** Explosive spells cause large knockback */
+    Explosion,
+    /** Freezing spells temporarily immobilise the opponent */
+    Freeze
+=======
     Weapon
+
 };
 
 UCLASS(Blueprintable)
@@ -31,10 +39,16 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Effect")
     UAnimMontage* Posture;
 
+
+    /** Facial expression played while casting */
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Effect")
+    UAnimMontage* FacialExpression;
+=======
 =======
 
     /** Facial expression played while casting */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Effect")
     UAnimMontage* FacialExpression;
+
 
 };

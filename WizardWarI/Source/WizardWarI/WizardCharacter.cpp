@@ -6,8 +6,13 @@
 #include "ShieldToken.h"
 #include "SpellEffectToken.h"
 
+#include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
+=======
+
 =======
 #include "Kismet/KismetMathLibrary.h"
+
 
 
 AWizardCharacter::AWizardCharacter()
@@ -21,8 +26,13 @@ AWizardCharacter::AWizardCharacter()
     bRightArmShield = false;
     ShieldDefenseBonus = 0.f;
 
+    LockedOpponent = nullptr;
+
+=======
+
 =======
     LockedOpponent = nullptr;
+
 
 
     ShieldMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMesh"));
@@ -48,10 +58,16 @@ void AWizardCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     PlayerInputComponent->BindAction("RightButton", IE_Pressed, this, &AWizardCharacter::CastRightArmPower);
     PlayerInputComponent->BindAction("XButton", IE_Pressed, this, &AWizardCharacter::SwitchLeftSlot);
     PlayerInputComponent->BindAction("YButton", IE_Pressed, this, &AWizardCharacter::SwitchRightSlot);
+
+    PlayerInputComponent->BindAction("MenuButton", IE_Pressed, this, &AWizardCharacter::OpenCharacterMenu);
+}
+
+=======
 }
 
 
 =======
+
 void AWizardCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
@@ -62,6 +78,9 @@ void AWizardCharacter::Tick(float DeltaSeconds)
         GetMesh()->SetWorldRotation(NewRot);
     }
 }
+
+
+=======
 
 
 void AWizardCharacter::CastLeftArm()
@@ -103,8 +122,13 @@ void AWizardCharacter::CastLeftArm()
         }
         ApplySpellEffectMovement(Effect->EffectType);
 
+        PlayFacialExpression(Effect->FacialExpression);
+        ApplyOpponentEffect(Effect->EffectType);
+=======
+
 =======
         PlayFacialExpression(Effect->FacialExpression);
+
 
     }
 }
@@ -148,8 +172,13 @@ void AWizardCharacter::CastRightArm()
         }
         ApplySpellEffectMovement(Effect->EffectType);
 
+        PlayFacialExpression(Effect->FacialExpression);
+        ApplyOpponentEffect(Effect->EffectType);
+=======
+
 =======
         PlayFacialExpression(Effect->FacialExpression);
+
 
     }
 }
@@ -180,7 +209,11 @@ void AWizardCharacter::SwitchLeftSlot()
     int32 Level = PS ? PS->GetLevel() : 1;
     if (Level >= 5 && !bLeftArmLevitation && !bLeftArmShield && LeftQuickSlots.Num() > 0)
     {
+
+        LeftSlotIndex = (LeftSlotIndex + 1) % FMath::Max(LeftQuickSlots.Num(), GetMaxArmSlots());
+=======
         LeftSlotIndex = (LeftSlotIndex + 1) % LeftQuickSlots.Num();
+
     }
 }
 
@@ -190,7 +223,11 @@ void AWizardCharacter::SwitchRightSlot()
     int32 Level = PS ? PS->GetLevel() : 1;
     if (Level >= 5 && !bRightArmLevitation && !bRightArmShield && RightQuickSlots.Num() > 0)
     {
+
+        RightSlotIndex = (RightSlotIndex + 1) % FMath::Max(RightQuickSlots.Num(), GetMaxArmSlots());
+=======
         RightSlotIndex = (RightSlotIndex + 1) % RightQuickSlots.Num();
+
     }
 }
 
@@ -203,19 +240,39 @@ void AWizardCharacter::AssignTokenToQuickSlot(UToken* Token, bool bLeftArm, int3
         return;
     }
 
+
+    int32 MaxSlots = GetMaxArmSlots();
+    if (SlotIndex >= MaxSlots)
+    {
+        return;
+    }
+
+    if (bLeftArm)
+    {
+        if (LeftQuickSlots.Num() < MaxSlots)
+        {
+            LeftQuickSlots.SetNum(MaxSlots);
+=======
     if (bLeftArm)
     {
         if (LeftQuickSlots.Num() <= SlotIndex)
         {
             LeftQuickSlots.SetNum(SlotIndex + 1);
+
         }
         LeftQuickSlots[SlotIndex] = Token;
     }
     else
     {
+
+        if (RightQuickSlots.Num() < MaxSlots)
+        {
+            RightQuickSlots.SetNum(MaxSlots);
+=======
         if (RightQuickSlots.Num() <= SlotIndex)
         {
             RightQuickSlots.SetNum(SlotIndex + 1);
+
         }
         RightQuickSlots[SlotIndex] = Token;
     }
@@ -240,13 +297,25 @@ void AWizardCharacter::ApplySpellEffectMovement(ESpellEffectType EffectType)
         case ESpellEffectType::Electricity:
             GetCharacterMovement()->MaxWalkSpeed *= 1.05f;
             break;
+
+        case ESpellEffectType::Explosion:
+            LaunchCharacter(GetActorForwardVector() * -200.f + FVector(0.f,0.f,200.f), true, true);
+            break;
+        case ESpellEffectType::Freeze:
+            // Caster experiences little movement for freeze
+            break;
+=======
+
         case ESpellEffectType::Weapon:
         default:
             break;
     }
 }
 
+
 =======
+=======
+
 
 void AWizardCharacter::SetOpponent(AActor* Opponent)
 {
@@ -260,4 +329,49 @@ void AWizardCharacter::PlayFacialExpression(UAnimMontage* Expression)
         PlayAnimMontage(Expression);
     }
 }
+
+
+void AWizardCharacter::OpenCharacterMenu()
+{
+    // Implementation will be provided in Blueprint to show the menu widget
+}
+
+int32 AWizardCharacter::GetMaxArmSlots() const
+{
+    const AWizardPlayerState* PS = GetPlayerState<AWizardPlayerState>();
+    int32 Level = PS ? PS->GetLevel() : 1;
+    return 3 + (Level / 10) * 3;
+}
+
+void AWizardCharacter::ApplyOpponentEffect(ESpellEffectType EffectType)
+{
+    ACharacter* OppChar = Cast<ACharacter>(LockedOpponent);
+    if (!OppChar)
+    {
+        return;
+    }
+
+    switch (EffectType)
+    {
+        case ESpellEffectType::Freeze:
+        case ESpellEffectType::Water:
+            if (UCharacterMovementComponent* Move = OppChar->GetCharacterMovement())
+            {
+                Move->DisableMovement();
+            }
+            break;
+        case ESpellEffectType::Electricity:
+            OppChar->LaunchCharacter(FVector(0.f, 0.f, -200.f), false, false);
+            break;
+        case ESpellEffectType::Fire:
+            // A real project would play a burn animation here
+            break;
+        case ESpellEffectType::Explosion:
+            OppChar->LaunchCharacter((OppChar->GetActorLocation() - GetActorLocation()).GetSafeNormal() * 500.f, true, true);
+            break;
+        default:
+            break;
+    }
+}
+=======
 

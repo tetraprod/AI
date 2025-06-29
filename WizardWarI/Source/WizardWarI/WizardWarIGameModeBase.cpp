@@ -1,8 +1,11 @@
 #include "WizardWarIGameModeBase.h"
 
+=======
+
 
 =======
 =======
+
 
 
 
@@ -64,6 +67,81 @@ void AWizardWarIGameModeBase::ResolveBet(AWizardPlayerState* Winner, AWizardPlay
     PendingHost = nullptr;
     PendingWager.Empty();
 }
+
+
+bool AWizardWarIGameModeBase::StartArenaBattle()
+{
+    if (bArenaActive)
+    {
+        return false;
+    }
+
+    bArenaActive = true;
+    ArenaStartTime = GetWorld()->GetTimeSeconds();
+    ArenaPlayers.Empty();
+    ArenaPool.Empty();
+    return true;
+}
+
+bool AWizardWarIGameModeBase::JoinArenaBattle(AWizardPlayerState* Player, const TArray<UToken*>& Tokens)
+{
+    if (!bArenaActive || !Player || ArenaPlayers.Num() >= 20)
+    {
+        return false;
+    }
+
+    ArenaPlayers.Add(Player);
+    Player->WagerTokens = Tokens;
+    ArenaPool.Append(Tokens);
+    return true;
+}
+
+void AWizardWarIGameModeBase::EndArenaBattle(const TArray<AWizardPlayerState*>& Survivors)
+{
+    if (!bArenaActive)
+    {
+        return;
+    }
+
+    const bool bLasted = (GetWorld()->GetTimeSeconds() - ArenaStartTime) >= 60.f;
+
+    for (AWizardPlayerState* Player : ArenaPlayers)
+    {
+        if (!Player)
+        {
+            continue;
+        }
+
+        if (Survivors.Contains(Player) && bLasted)
+        {
+            TArray<UToken*> Reward = Player->WagerTokens;
+            Reward.Append(Player->WagerTokens);
+            Player->TokenInventory.Append(Reward);
+        }
+        else
+        {
+            ArenaPool.Append(Player->WagerTokens);
+        }
+
+        Player->WagerTokens.Empty();
+    }
+
+    ArenaPlayers.Empty();
+    bArenaActive = false;
+}
+
+void AWizardWarIGameModeBase::ResolveDailyDeathmatch(AWizardPlayerState* Winner)
+{
+    if (!Winner || ArenaPool.Num() == 0)
+    {
+        return;
+    }
+
+    Winner->TokenInventory.Append(ArenaPool);
+    ArenaPool.Empty();
+}
+
+=======
 
 void AWizardWarIGameModeBase::AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds)
 {
@@ -133,8 +211,11 @@ bool AWizardWarIGameModeBase::LoadPlayer(AWizardPlayerState* Player, const FStri
     return false;
 }
 
+
 =======
 =======
+=======
+
 
 
 void AWizardWarIGameModeBase::StartPlay()
@@ -145,8 +226,11 @@ void AWizardWarIGameModeBase::StartPlay()
         UGameplayStatics::SpawnSound2D(this, MenuMusic);
     }
 }
+
 =======
 =======
+=======
+
 
 
 

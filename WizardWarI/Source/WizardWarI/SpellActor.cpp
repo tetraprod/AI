@@ -2,11 +2,16 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
 
+#include "Components/PointLightComponent.h"
+#include "Kismet/GameplayStatics.h"
+=======
+
 
 =======
 #include "Components/PointLightComponent.h"
 #include "Kismet/GameplayStatics.h"
 =======
+
 
 
 ASpellActor::ASpellActor()
@@ -18,13 +23,19 @@ ASpellActor::ASpellActor()
 
 =======
 
+=======
+
+
     Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
     Light->SetupAttachment(RootComponent);
     Light->Intensity = 3000.f;
     Light->bUseInverseSquaredFalloff = false;
     Light->AttenuationRadius = 250.f;
 
+
 =======
+=======
+
 
 
     Movement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Movement"));
@@ -37,9 +48,12 @@ void ASpellActor::InitSpell(float Power, float Area, ESpellEffectType EffectType
     float Scale = FMath::Clamp(Area, 0.5f, 3.f);
     Mesh->SetWorldScale3D(FVector(Scale));
 
+=======
+
     Movement->Velocity = GetActorForwardVector() * (1000.f + Power * 100.f);
 
 =======
+
 
     Mesh->SetMassOverrideInKg(NAME_None, 10.f + Power * 5.f);
     Movement->Velocity = GetActorForwardVector() * (1000.f + Power * 100.f);
@@ -49,8 +63,11 @@ void ASpellActor::InitSpell(float Power, float Area, ESpellEffectType EffectType
     {
         UGameplayStatics::SpawnSoundAtLocation(this, CastSound, GetActorLocation());
     }
+
+=======
 =======
     Movement->Velocity = GetActorForwardVector() * (1000.f + Power * 100.f);
+
 
 
 
@@ -58,6 +75,8 @@ void ASpellActor::InitSpell(float Power, float Area, ESpellEffectType EffectType
     {
         case ESpellEffectType::Earth:
             Mesh->SetVectorParameterValueOnMaterials(TEXT("Color"), FVector(0.4f, 0.2f, 0.f));
+
+=======
 
             break;
         case ESpellEffectType::Air:
@@ -75,6 +94,7 @@ void ASpellActor::InitSpell(float Power, float Area, ESpellEffectType EffectType
         case ESpellEffectType::Weapon:
         default:
 =======
+
 
             Light->SetLightColor(FLinearColor(0.4f, 0.2f, 0.f));
             break;
@@ -94,6 +114,19 @@ void ASpellActor::InitSpell(float Power, float Area, ESpellEffectType EffectType
             Mesh->SetVectorParameterValueOnMaterials(TEXT("Color"), FVector(1.f, 1.f, 0.f));
             Light->SetLightColor(FLinearColor(1.f, 1.f, 0.f));
             break;
+
+        case ESpellEffectType::Explosion:
+            Mesh->SetVectorParameterValueOnMaterials(TEXT("Color"), FVector(1.f, 0.5f, 0.2f));
+            Light->SetLightColor(FLinearColor(1.f, 0.5f, 0.2f));
+            break;
+        case ESpellEffectType::Freeze:
+            Mesh->SetVectorParameterValueOnMaterials(TEXT("Color"), FVector(0.5f, 0.8f, 1.f));
+            Light->SetLightColor(FLinearColor(0.5f, 0.8f, 1.f));
+            break;
+        case ESpellEffectType::Weapon:
+        default:
+            Light->SetLightColor(FLinearColor::White);
+=======
         case ESpellEffectType::Weapon:
         default:
             Light->SetLightColor(FLinearColor::White);

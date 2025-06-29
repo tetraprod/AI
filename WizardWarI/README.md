@@ -8,6 +8,9 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
 * Character creation and local multiplayer are planned features.
+* Planned single-player mode lets you duel randomly generated wizards.
+  Winning a match awards one **Power** token, one **Area** token, and two
+  random **Effect** tokens to expand your arsenal.
 
 ## Building
 

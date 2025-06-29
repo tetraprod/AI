@@ -4,6 +4,7 @@
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
+
 class AWizardPlayerState;
 
 class AWizardWarIGameModeBase : public AGameModeBase
@@ -42,4 +43,9 @@ protected:
     /** Tokens wagered by the host */
     UPROPERTY()
     TArray<UToken*> PendingWager;
+=======
+class AWizardWarIGameModeBase : public AGameModeBase
+{
+    GENERATED_BODY()
+
 };

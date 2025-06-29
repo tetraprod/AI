@@ -6,7 +6,10 @@
 #include "LevitationToken.h"
 #include "ShieldToken.h"
 #include "SpellEffectToken.h"
+
+=======
 #include "Animation/AnimMontage.h"
+
 #include "Components/StaticMeshComponent.h"
 #include "WizardCharacter.generated.h"
 
@@ -18,7 +21,10 @@ public:
     AWizardCharacter();
 
     virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+=======
     virtual void Tick(float DeltaSeconds) override;
+
 
     UFUNCTION()
     void CastLeftArm();
@@ -87,6 +93,8 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Camera")
     UCameraComponent* FirstPersonCamera;
 
+
+=======
     /** Current opponent actor for keeping eyes locked */
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="Facial")
     AActor* LockedOpponent;
@@ -98,6 +106,7 @@ public:
     /** Play a facial expression montage */
     UFUNCTION(BlueprintCallable, Category="Facial")
     void PlayFacialExpression(UAnimMontage* Expression);
+
 
 protected:
     /** Apply movement or posture changes for a spell effect */

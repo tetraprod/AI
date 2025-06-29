@@ -42,6 +42,8 @@ The default language is English if an unknown code is provided.
 ## Wizard War I Skeleton
 
 
+=======
+
 A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support, including example input bindings for casting with each arm. The game is designed from a first-person perspective. Once players reach level five they can swap token quick slots using the `X` button for the left arm and `Y` for the right. See `WizardWarI/README.md` for build instructions.
 
 The project enables physics simulation for characters, spells and environmental objects so effects like power and area directly influence spell behavior.
@@ -69,5 +71,6 @@ music.
 =======
 =======
 A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support. See `WizardWarI/README.md` for build instructions.
+
 
 

@@ -5,7 +5,10 @@
 #include "Camera/CameraComponent.h"
 #include "ShieldToken.h"
 #include "SpellEffectToken.h"
+
+=======
 #include "Kismet/KismetMathLibrary.h"
+
 
 AWizardCharacter::AWizardCharacter()
 {
@@ -17,7 +20,10 @@ AWizardCharacter::AWizardCharacter()
     bLeftArmShield = false;
     bRightArmShield = false;
     ShieldDefenseBonus = 0.f;
+
+=======
     LockedOpponent = nullptr;
+
 
     ShieldMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMesh"));
     ShieldMesh->SetupAttachment(RootComponent);
@@ -44,6 +50,8 @@ void AWizardCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     PlayerInputComponent->BindAction("YButton", IE_Pressed, this, &AWizardCharacter::SwitchRightSlot);
 }
 
+
+=======
 void AWizardCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
@@ -54,6 +62,7 @@ void AWizardCharacter::Tick(float DeltaSeconds)
         GetMesh()->SetWorldRotation(NewRot);
     }
 }
+
 
 void AWizardCharacter::CastLeftArm()
 {
@@ -93,7 +102,10 @@ void AWizardCharacter::CastLeftArm()
             }
         }
         ApplySpellEffectMovement(Effect->EffectType);
+
+=======
         PlayFacialExpression(Effect->FacialExpression);
+
     }
 }
 
@@ -135,7 +147,10 @@ void AWizardCharacter::CastRightArm()
             }
         }
         ApplySpellEffectMovement(Effect->EffectType);
+
+=======
         PlayFacialExpression(Effect->FacialExpression);
+
     }
 }
 
@@ -231,6 +246,8 @@ void AWizardCharacter::ApplySpellEffectMovement(ESpellEffectType EffectType)
     }
 }
 
+=======
+
 void AWizardCharacter::SetOpponent(AActor* Opponent)
 {
     LockedOpponent = Opponent;
@@ -243,3 +260,4 @@ void AWizardCharacter::PlayFacialExpression(UAnimMontage* Expression)
         PlayAnimMontage(Expression);
     }
 }
+

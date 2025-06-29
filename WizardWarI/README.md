@@ -8,6 +8,8 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
 
+
+=======
 * The game is played in a first-person view.
 * The left and right triggers cast spells from the left and right arms.
 * At level 5, players can assign token chains to quick slots and switch them with `X` (left arm) or `Y` (right arm).
@@ -41,6 +43,7 @@ The game plays "In the Hall of the Mountain King" on the main menu for atmospher
 
 
 
+
 ## Building
 
 1. Install Unreal Engine 5 (or later) from the Epic Games Launcher.
@@ -69,6 +72,8 @@ Compilation requires Unreal Engine which is not included in this repository. The
 
 =======
 
+=======
+
 ## Roadmap
 
 The project currently contains only a basic UE 5 setup. Future updates will focus on adopting modern engine features and improving game quality.
@@ -82,5 +87,6 @@ The project currently contains only a basic UE 5 setup. Future updates will focu
 * **High-fidelity assets** – Target film-quality materials and textures optimized for Nanite.
 * **Multiplayer replication** – Ensure reliable replication of movement and spell effects for online duels.
 * **Performance targets** – Maintain 60 FPS at 1080p on mid-range GPUs (around an RTX 2070) with scalability options for lower-end machines.
+
 
 

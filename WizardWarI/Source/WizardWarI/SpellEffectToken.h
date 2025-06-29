@@ -31,7 +31,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Effect")
     UAnimMontage* Posture;
 
+=======
+
     /** Facial expression played while casting */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Effect")
     UAnimMontage* FacialExpression;
+
 };

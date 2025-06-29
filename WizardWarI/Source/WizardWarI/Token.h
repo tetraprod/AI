@@ -19,6 +19,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     ETokenType TokenType;
 
+=======
 
 =======
 
@@ -36,6 +37,7 @@ public:
     /** Numerical radius/size for Area tokens */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     float AreaValue;
+=======
 
 =======
 

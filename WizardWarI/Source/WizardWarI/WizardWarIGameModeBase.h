@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+=======
 
 =======
 
@@ -9,6 +10,7 @@
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
+=======
 
 =======
 =======
@@ -36,6 +38,7 @@ public:
     UFUNCTION(BlueprintCallable, Category="Multiplayer")
     void ResolveBet(AWizardPlayerState* Winner, AWizardPlayerState* Loser);
 
+=======
 
     /** Begin a multiplayer arena battle for up to twenty players */
     UFUNCTION(BlueprintCallable, Category="Arena")
@@ -53,6 +56,7 @@ public:
     UFUNCTION(BlueprintCallable, Category="Arena")
     void ResolveDailyDeathmatch(AWizardPlayerState* Winner);
 =======
+=======
     /** Grant experience based on match duration */
     UFUNCTION(BlueprintCallable, Category="Gameplay")
     void AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds);
@@ -110,6 +114,7 @@ public:
     UFUNCTION(BlueprintCallable, Category="Save")
     bool LoadPlayer(AWizardPlayerState* Player, const FString& SlotName);
 
+=======
 
 =======
 
@@ -120,6 +125,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* MenuMusic;
 
+=======
 
 =======
 =======
@@ -134,6 +140,7 @@ protected:
     UPROPERTY()
     TArray<UToken*> PendingWager;
 
+=======
 
     /** Active arena state */
     UPROPERTY()
@@ -150,6 +157,7 @@ protected:
     /** Token pool accumulated from arena wagers */
     UPROPERTY()
     TArray<UToken*> ArenaPool;
+=======
 =======
 =======
 =======

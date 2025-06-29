@@ -1,4 +1,5 @@
 #include "WizardWarIGameModeBase.h"
+=======
 
 =======
 
@@ -68,6 +69,7 @@ void AWizardWarIGameModeBase::ResolveBet(AWizardPlayerState* Winner, AWizardPlay
     PendingWager.Empty();
 }
 
+=======
 
 bool AWizardWarIGameModeBase::StartArenaBattle()
 {
@@ -142,6 +144,7 @@ void AWizardWarIGameModeBase::ResolveDailyDeathmatch(AWizardPlayerState* Winner)
 }
 
 =======
+=======
 
 void AWizardWarIGameModeBase::AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds)
 {
@@ -211,6 +214,7 @@ bool AWizardWarIGameModeBase::LoadPlayer(AWizardPlayerState* Player, const FStri
     return false;
 }
 
+=======
 
 =======
 =======
@@ -225,6 +229,13 @@ void AWizardWarIGameModeBase::StartPlay()
     {
         UGameplayStatics::SpawnSound2D(this, MenuMusic);
     }
+    if (GEngine)
+    {
+        // Lock the game to 60 FPS for smoother play
+        GEngine->Exec(GetWorld(), TEXT("t.MaxFPS 60"));
+    }
+}
+=======
 }
 
 =======

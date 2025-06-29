@@ -2,6 +2,9 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "SpellEffectToken.h"
+#include "Components/PointLightComponent.h"
+#include "Sound/SoundBase.h"
+=======
 
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
@@ -30,6 +33,7 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     class UProjectileMovementComponent* Movement;
 
+=======
 
 =======
 
@@ -44,6 +48,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* CastSound;
 
+=======
 
 =======
 =======

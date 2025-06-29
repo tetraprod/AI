@@ -6,6 +6,8 @@ USpellEffectToken::USpellEffectToken()
     EffectType = ESpellEffectType::Fire;
     Gesture = nullptr;
     Posture = nullptr;
+    FacialExpression = nullptr;
+=======
 
     FacialExpression = nullptr;
 =======

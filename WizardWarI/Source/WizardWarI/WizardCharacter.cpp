@@ -7,6 +7,16 @@
 #include "SpellEffectToken.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+=======
+
+#include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/CharacterMovementComponent.h"
+=======
+
+=======
+#include "Kismet/KismetMathLibrary.h"
+
+
 
 AWizardCharacter::AWizardCharacter()
 {
@@ -19,6 +29,17 @@ AWizardCharacter::AWizardCharacter()
     bRightArmShield = false;
     ShieldDefenseBonus = 0.f;
     LockedOpponent = nullptr;
+
+=======
+
+    LockedOpponent = nullptr;
+
+=======
+
+=======
+    LockedOpponent = nullptr;
+
+
 
     ShieldMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShieldMesh"));
     ShieldMesh->SetupAttachment(RootComponent);
@@ -46,6 +67,17 @@ void AWizardCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
     PlayerInputComponent->BindAction("MenuButton", IE_Pressed, this, &AWizardCharacter::OpenCharacterMenu);
 }
 
+=======
+
+    PlayerInputComponent->BindAction("MenuButton", IE_Pressed, this, &AWizardCharacter::OpenCharacterMenu);
+}
+
+=======
+}
+
+
+=======
+
 void AWizardCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
@@ -56,6 +88,11 @@ void AWizardCharacter::Tick(float DeltaSeconds)
         GetMesh()->SetWorldRotation(NewRot);
     }
 }
+
+=======
+
+=======
+
 
 void AWizardCharacter::CastLeftArm()
 {
@@ -97,6 +134,16 @@ void AWizardCharacter::CastLeftArm()
         ApplySpellEffectMovement(Effect->EffectType);
         PlayFacialExpression(Effect->FacialExpression);
         ApplyOpponentEffect(Effect->EffectType);
+=======
+
+        PlayFacialExpression(Effect->FacialExpression);
+        ApplyOpponentEffect(Effect->EffectType);
+=======
+
+=======
+        PlayFacialExpression(Effect->FacialExpression);
+
+
     }
 }
 
@@ -140,6 +187,16 @@ void AWizardCharacter::CastRightArm()
         ApplySpellEffectMovement(Effect->EffectType);
         PlayFacialExpression(Effect->FacialExpression);
         ApplyOpponentEffect(Effect->EffectType);
+=======
+
+        PlayFacialExpression(Effect->FacialExpression);
+        ApplyOpponentEffect(Effect->EffectType);
+=======
+
+=======
+        PlayFacialExpression(Effect->FacialExpression);
+
+
     }
 }
 
@@ -170,6 +227,12 @@ void AWizardCharacter::SwitchLeftSlot()
     if (Level >= 5 && !bLeftArmLevitation && !bLeftArmShield && LeftQuickSlots.Num() > 0)
     {
         LeftSlotIndex = (LeftSlotIndex + 1) % FMath::Max(LeftQuickSlots.Num(), GetMaxArmSlots());
+=======
+
+        LeftSlotIndex = (LeftSlotIndex + 1) % FMath::Max(LeftQuickSlots.Num(), GetMaxArmSlots());
+=======
+        LeftSlotIndex = (LeftSlotIndex + 1) % LeftQuickSlots.Num();
+
     }
 }
 
@@ -180,6 +243,12 @@ void AWizardCharacter::SwitchRightSlot()
     if (Level >= 5 && !bRightArmLevitation && !bRightArmShield && RightQuickSlots.Num() > 0)
     {
         RightSlotIndex = (RightSlotIndex + 1) % FMath::Max(RightQuickSlots.Num(), GetMaxArmSlots());
+=======
+
+        RightSlotIndex = (RightSlotIndex + 1) % FMath::Max(RightQuickSlots.Num(), GetMaxArmSlots());
+=======
+        RightSlotIndex = (RightSlotIndex + 1) % RightQuickSlots.Num();
+
     }
 }
 
@@ -192,6 +261,8 @@ void AWizardCharacter::AssignTokenToQuickSlot(UToken* Token, bool bLeftArm, int3
         return;
     }
 
+=======
+
     int32 MaxSlots = GetMaxArmSlots();
     if (SlotIndex >= MaxSlots)
     {
@@ -203,6 +274,14 @@ void AWizardCharacter::AssignTokenToQuickSlot(UToken* Token, bool bLeftArm, int3
         if (LeftQuickSlots.Num() < MaxSlots)
         {
             LeftQuickSlots.SetNum(MaxSlots);
+=======
+=======
+    if (bLeftArm)
+    {
+        if (LeftQuickSlots.Num() <= SlotIndex)
+        {
+            LeftQuickSlots.SetNum(SlotIndex + 1);
+
         }
         LeftQuickSlots[SlotIndex] = Token;
     }
@@ -211,6 +290,16 @@ void AWizardCharacter::AssignTokenToQuickSlot(UToken* Token, bool bLeftArm, int3
         if (RightQuickSlots.Num() < MaxSlots)
         {
             RightQuickSlots.SetNum(MaxSlots);
+=======
+
+        if (RightQuickSlots.Num() < MaxSlots)
+        {
+            RightQuickSlots.SetNum(MaxSlots);
+=======
+        if (RightQuickSlots.Num() <= SlotIndex)
+        {
+            RightQuickSlots.SetNum(SlotIndex + 1);
+
         }
         RightQuickSlots[SlotIndex] = Token;
     }
@@ -235,17 +324,28 @@ void AWizardCharacter::ApplySpellEffectMovement(ESpellEffectType EffectType)
         case ESpellEffectType::Electricity:
             GetCharacterMovement()->MaxWalkSpeed *= 1.05f;
             break;
+=======
+
         case ESpellEffectType::Explosion:
             LaunchCharacter(GetActorForwardVector() * -200.f + FVector(0.f,0.f,200.f), true, true);
             break;
         case ESpellEffectType::Freeze:
             // Caster experiences little movement for freeze
             break;
+=======
+=======
+
         case ESpellEffectType::Weapon:
         default:
             break;
     }
 }
+
+=======
+
+=======
+=======
+
 
 void AWizardCharacter::SetOpponent(AActor* Opponent)
 {
@@ -259,6 +359,8 @@ void AWizardCharacter::PlayFacialExpression(UAnimMontage* Expression)
         PlayAnimMontage(Expression);
     }
 }
+
+=======
 
 void AWizardCharacter::OpenCharacterMenu()
 {
@@ -302,3 +404,6 @@ void AWizardCharacter::ApplyOpponentEffect(ESpellEffectType EffectType)
             break;
     }
 }
+=======
+=======
+

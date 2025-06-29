@@ -19,6 +19,10 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     ETokenType TokenType;
 
+
+=======
+
+
     /** Numerical strength for Power tokens */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     float PowerValue;
@@ -26,4 +30,9 @@ public:
     /** Numerical radius/size for Area tokens */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     float AreaValue;
+
+=======
+=======
+
+
 };

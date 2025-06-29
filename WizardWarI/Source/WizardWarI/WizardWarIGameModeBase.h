@@ -1,10 +1,17 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+
 #include "Sound/SoundBase.h"
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
+=======
+#include "WizardWarIGameModeBase.generated.h"
+
+UCLASS()
+
+
 class AWizardPlayerState;
 
 class AWizardWarIGameModeBase : public AGameModeBase
@@ -35,11 +42,14 @@ public:
     UFUNCTION(BlueprintCallable, Category="Save")
     bool LoadPlayer(AWizardPlayerState* Player, const FString& SlotName);
 
+
     virtual void StartPlay() override;
 
     /** Background music played on the main menu */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* MenuMusic;
+
+=======
 
 protected:
     /** Pending host waiting for a challenger */
@@ -49,4 +59,12 @@ protected:
     /** Tokens wagered by the host */
     UPROPERTY()
     TArray<UToken*> PendingWager;
+
+=======
+=======
+class AWizardWarIGameModeBase : public AGameModeBase
+{
+    GENERATED_BODY()
+
+
 };

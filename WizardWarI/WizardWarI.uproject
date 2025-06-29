@@ -1,0 +1,13 @@
+{
+    "FileVersion": 3,
+    "EngineAssociation": "5.0",
+    "Category": "Games",
+    "Description": "Wizard War I - Spell combat game skeleton",
+    "Modules": [
+        {
+            "Name": "WizardWarI",
+            "Type": "Runtime",
+            "LoadingPhase": "Default"
+        }
+    ]
+}

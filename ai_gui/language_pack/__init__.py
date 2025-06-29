@@ -1,10 +1,12 @@
 """Language pack loader."""
 
-from . import en, es
+from . import en, es, fr, de
 
 LANGUAGES = {
     'en': en.PROMPTS,
     'es': es.PROMPTS,
+    'fr': fr.PROMPTS,
+    'de': de.PROMPTS,
 }
 
 

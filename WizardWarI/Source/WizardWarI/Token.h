@@ -20,6 +20,21 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     ETokenType TokenType;
 
+=======
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
+    ETokenType TokenType;
+
+=======
+
+=======
+
+
+=======
+=======
+
+
+
+
     /** Numerical strength for Power tokens */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     float PowerValue;
@@ -35,4 +50,18 @@ public:
     /** Glow colour used when displaying the token */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Visual")
     FLinearColor GlowColor;
+=======
+=======
+
+=======
+
+=======
+=======
+
+=======
+=======
+
+
+
+
 };

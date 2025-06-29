@@ -5,5 +5,22 @@ public class WizardWarI : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
         PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "PhysicsCore", "OnlineSubsystem", "OnlineSubsystemUtils", "UMG" });
+=======
+=======
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "PhysicsCore", "OnlineSubsystem", "OnlineSubsystemUtils", "UMG" });
+=======
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "PhysicsCore", "OnlineSubsystem", "OnlineSubsystemUtils", "UMG" });
+=======
+
+=======
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "PhysicsCore", "OnlineSubsystem", "OnlineSubsystemUtils", "UMG" });
+=======
+
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+
+
     }
 }

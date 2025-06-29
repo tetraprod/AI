@@ -44,6 +44,21 @@ AWizardWarIGameModeBase::AWizardWarIGameModeBase()
     Mountain.Type = ECombatEnvironment::MountainTop;
     AvailableEnvironments.Add(Mountain);
 }
+=======
+=======
+
+=======
+
+
+=======
+=======
+
+
+
+
+#include "WizardPlayerState.h"
+#include "WizardSaveGame.h"
+#include "Kismet/GameplayStatics.h"
 
 
 bool AWizardWarIGameModeBase::HostBetMatch(AWizardPlayerState* HostPlayer, const TArray<UToken*>& Tokens)
@@ -99,6 +114,9 @@ void AWizardWarIGameModeBase::ResolveBet(AWizardPlayerState* Winner, AWizardPlay
     PendingHost = nullptr;
     PendingWager.Empty();
 }
+
+=======
+=======
 
 bool AWizardWarIGameModeBase::StartArenaBattle()
 {
@@ -171,6 +189,10 @@ void AWizardWarIGameModeBase::ResolveDailyDeathmatch(AWizardPlayerState* Winner)
     Winner->TokenInventory.Append(ArenaPool);
     ArenaPool.Empty();
 }
+
+=======
+=======
+=======
 
 void AWizardWarIGameModeBase::AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds)
 {
@@ -284,6 +306,7 @@ void AWizardWarIGameModeBase::EquipShoutAttack(AWizardPlayerState* Player, UShou
     Player->EquippedShoutAttack = Token;
 }
 
+=======
 bool AWizardWarIGameModeBase::SavePlayer(AWizardPlayerState* Player, const FString& SlotName)
 {
     if (!Player)
@@ -317,6 +340,10 @@ bool AWizardWarIGameModeBase::SavePlayer(AWizardPlayerState* Player, const FStri
     SaveGame->OwnedShoutAttacks = Player->OwnedShoutAttacks;
     SaveGame->EquippedShoutAttack = Player->EquippedShoutAttack;
     SaveGame->CustomTauntMessage = Player->CustomTauntMessage;
+=======
+    SaveGame->SkinColor = Player->SkinColor;
+    SaveGame->HairColor = Player->HairColor;
+    SaveGame->Height = Player->Height;
 
     return UGameplayStatics::SaveGameToSlot(SaveGame, SlotName, 0);
 }
@@ -357,6 +384,10 @@ bool AWizardWarIGameModeBase::LoadPlayer(AWizardPlayerState* Player, const FStri
         Player->OwnedShoutAttacks = SaveGame->OwnedShoutAttacks;
         Player->EquippedShoutAttack = SaveGame->EquippedShoutAttack;
         Player->CustomTauntMessage = SaveGame->CustomTauntMessage;
+=======
+        Player->SkinColor = SaveGame->SkinColor;
+        Player->HairColor = SaveGame->HairColor;
+        Player->Height = SaveGame->Height;
         return true;
     }
 
@@ -378,6 +409,14 @@ void AWizardWarIGameModeBase::SpawnRandomEnvironment()
         ActiveEnvironment = GetWorld()->SpawnActor<AActor>(Entry.EnvironmentClass, Params);
     }
 }
+=======
+=======
+
+=======
+=======
+=======
+
+
 
 void AWizardWarIGameModeBase::StartPlay()
 {
@@ -391,9 +430,21 @@ void AWizardWarIGameModeBase::StartPlay()
         GetWorld()->SpawnActor<ACastleHub>(HomeCastleClass);
     }
     SpawnRandomEnvironment();
+=======
     if (GEngine)
     {
         // Lock the game to 60 FPS for smoother play
         GEngine->Exec(GetWorld(), TEXT("t.MaxFPS 60"));
     }
 }
+=======
+=======
+}
+
+=======
+=======
+=======
+
+
+
+

@@ -60,6 +60,14 @@ Players can now design their wizard using a full character creation screen that 
 Reaching level 1000 grants automatic one-hit kills even in online matches, turning every duel into a quick draw.
 Each level also provides a small amount of additional damage resistance.
 Progress can be saved to a slot and loaded later through a basic save system.
+
+Spells now emit dynamic lighting that matches their element colour and intensity,
+enhancing shading when Lumen global illumination is enabled in your project.
+Spells also play positional surround sound effects for added immersion, and the
+main menu features the classic "In the Hall of the Mountain King" as background
+music.
+=======
 =======
 A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support. See `WizardWarI/README.md` for build instructions.
+
 

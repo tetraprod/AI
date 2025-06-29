@@ -7,10 +7,33 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Players chain `Power`, `Area`, and `Effect` tokens to cast spells.
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
+
+* The game is played in a first-person view.
+* The left and right triggers cast spells from the left and right arms.
+* At level 5, players can assign token chains to quick slots and switch them with `X` (left arm) or `Y` (right arm).
+* At level 10, the left and right buttons unlock powerful double-effect attacks.
+* Character creation and local multiplayer are planned features.
+* Online multiplayer lets players wager token chains against a challenger.
+
+* Experience rewards scale with match length. Matches over 30 seconds grant double XP and those over 90 seconds grant quadruple XP. Levels require progressively more XP with a cap of 1000. At level 666 a wizard turns evil, while level 777 grants a holy white appearance.
+
+* A comprehensive character creation menu lets players fine tune their wizard's height, eye and hair colour, skin tone, body build and hairstyle when starting a profile.
+* Upon reaching level 1000, wizards instantly defeat opponents with any hit, even in multiplayer. Every level also adds a small amount of damage resistance.
+* Player progress can be saved to a slot and loaded later.
+
+Physics simulation is enabled for spells, characters and environmental objects so the `Power` and `Area` tokens scale force and size appropriately.
+
+Levitation tokens combine with `Power` and `Area` tokens to keep an arm levitating for an entire duel. While active, they raise the wizard's movement speed according to the chosen power value, preventing quick slot switches on that arm.
+Shield tokens can also be chained with `Power` tokens. Activating one locks the arm for the duel and projects a glowing barrier that reduces incoming damage based on the power value.
+
+Each elemental effect token prompts a different hand gesture and a reserved movement adjustment when cast: earth nudges the caster down, air lifts them slightly, fire steps them back, water slows them, electricity speeds them up for a moment and weapon summons lunge forward.
+Facial animation accompanies these gestures so the wizard's face reflects the casting style while their eyes remain focused on the opponent.
+=======
 * Character creation and local multiplayer are planned features.
 * Planned single-player mode lets you duel randomly generated wizards.
   Winning a match awards one **Power** token, one **Area** token, and two
   random **Effect** tokens to expand your arsenal.
+
 
 ## Building
 
@@ -30,6 +53,8 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 
 Compilation requires Unreal Engine which is not included in this repository. The project is provided as a starting template only.
 
+=======
+
 ## Roadmap
 
 The project currently contains only a basic UE 5 setup. Future updates will focus on adopting modern engine features and improving game quality.
@@ -43,3 +68,4 @@ The project currently contains only a basic UE 5 setup. Future updates will focu
 * **High-fidelity assets** – Target film-quality materials and textures optimized for Nanite.
 * **Multiplayer replication** – Ensure reliable replication of movement and spell effects for online duels.
 * **Performance targets** – Maintain 60 FPS at 1080p on mid-range GPUs (around an RTX 2070) with scalability options for lower-end machines.
+

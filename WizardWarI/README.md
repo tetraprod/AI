@@ -8,6 +8,9 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
 * Character creation and local multiplayer are planned features.
+* Planned single-player mode lets you duel randomly generated wizards.
+  Winning a match awards one **Power** token, one **Area** token, and two
+  random **Effect** tokens to expand your arsenal.
 
 ## Building
 
@@ -26,3 +29,17 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 ## Note
 
 Compilation requires Unreal Engine which is not included in this repository. The project is provided as a starting template only.
+
+## Roadmap
+
+The project currently contains only a basic UE 5 setup. Future updates will focus on adopting modern engine features and improving game quality.
+
+* **Nanite** – Rebuild environment and character meshes with Nanite to support extremely high polygon counts while keeping draw calls low.
+* **Lumen** – Enable real-time global illumination and reflections using Lumen with fallbacks for older hardware.
+* **Niagara VFX** – Migrate all spell and ambient effects to Niagara for GPU-accelerated simulations.
+
+### Development Goals
+
+* **High-fidelity assets** – Target film-quality materials and textures optimized for Nanite.
+* **Multiplayer replication** – Ensure reliable replication of movement and spell effects for online duels.
+* **Performance targets** – Maintain 60 FPS at 1080p on mid-range GPUs (around an RTX 2070) with scalability options for lower-end machines.

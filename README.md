@@ -39,6 +39,29 @@ prompts = get_prompts('es')
 
 The default language is American English if an unknown code is provided.
 
+## Windows Customizer
+
+The repository also includes a small Windows-only GUI that can tweak a few
+appearance settings. It lets you pick a new accent colour, switch the Start menu
+to the dark theme, set a custom logon background and draw a mouse cursor. Your
+choices are saved to `~/.win_customizer.json`.
+
+Run it with:
+
+```bash
+python -m windows_customizer.app
+```
+
+To bundle the customizer as a standalone executable run PyInstaller on a
+Windows machine:
+
+```bash
+pip install pyinstaller
+pyinstaller windows_customizer/app.py --onefile
+```
+
+The generated binary will be placed in the `dist` folder as `app.exe`.
+
 ## Wizard War I Skeleton
 
 A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support, including example input bindings for casting with each arm. The game is designed from a first-person perspective. Once players reach level five they can swap token quick slots using the `X` button for the left arm and `Y` for the right. A settings screen on the main menu lets you remap these controls and adjust audio or video preferences. See `WizardWarI/README.md` for build instructions.

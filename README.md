@@ -206,4 +206,7 @@ A minimal Unreal Engine project is available in the `WizardWarI` directory. It p
 
 ## Build Debian ISO with ChatGPT Assistant
 
+
+A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` is a bootable hybrid ISO that boots into a simple Openbox session and automatically launches the assistant.
+=======
 A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` boots into a simple Openbox session and automatically launches the assistant.

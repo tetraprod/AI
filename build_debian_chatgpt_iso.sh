@@ -15,6 +15,10 @@ cd "$WORKDIR"
 
 lb config \
   --distribution bookworm \
+  --binary-images iso-hybrid \
+  --debian-installer live \
+  --bootloader grub-efi \
+=======
   --debian-installer live \
   --packages "python3 python3-pip openbox"
 

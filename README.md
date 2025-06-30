@@ -18,6 +18,19 @@ pip install -r requirements.txt
 python -m ai_gui.app
 ```
 
+## Linux ChatGPT Desktop Assistant
+
+An additional script integrates ChatGPT with a simple Tkinter interface that can
+be launched from any Linux desktop. Set the `OPENAI_API_KEY` environment
+variable and run:
+
+```bash
+python -m ai_gui.chatgpt_desktop
+```
+
+You may create a `.desktop` file pointing to this command so it appears in your
+application launcher.
+
 ## HTML Interface
 
 A basic web interface is provided in the `html` directory. Open `html/index.html` in a browser or serve the folder with a simple HTTP server:
@@ -190,3 +203,7 @@ A minimal Unreal Engine project is available in the `WizardWarI` directory. It p
 
 
 
+
+## Build Debian ISO with ChatGPT Assistant
+
+A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` boots into a simple Openbox session and automatically launches the assistant.

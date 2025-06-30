@@ -3,7 +3,14 @@ import os
 import sys
 import tkinter as tk
 from tkinter import filedialog, colorchooser, messagebox
-from PIL import Image, ImageDraw
+try:
+    from PIL import Image, ImageDraw
+except ImportError:
+    messagebox.showerror(
+        "Missing dependency",
+        "The Pillow package is required. Install it with 'pip install pillow'.",
+    )
+    raise
 
 if sys.platform != 'win32':
     raise OSError('This application only runs on Windows.')

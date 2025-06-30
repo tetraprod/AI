@@ -46,6 +46,10 @@ appearance settings. It lets you pick a new accent colour, switch the Start menu
 to the dark theme, set a custom logon background and draw a mouse cursor. Your
 choices are saved to `~/.win_customizer.json`.
 
+This app relies on the **Pillow** library. Install all dependencies with
+`pip install -r requirements.txt` or install Pillow individually using
+`pip install pillow`.
+
 Run it with:
 
 ```bash

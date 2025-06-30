@@ -210,3 +210,13 @@ A minimal Unreal Engine project is available in the `WizardWarI` directory. It p
 A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` is a bootable hybrid ISO that boots into a simple Openbox session and automatically launches the assistant.
 =======
 A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` boots into a simple Openbox session and automatically launches the assistant.
+
+## HP Boot Video
+
+A basic GUI for Windows that lets you pick a video to play automatically when you log in. It simply creates a small batch file in your Startup folder which launches the chosen video with your default media player. Note that HP firmware does not support replacing the BIOS boot logo with a video, so this tool only provides a video after Windows has started.
+
+Run it with:
+
+```bash
+python -m hp_boot_video.app
+```

@@ -75,6 +75,20 @@ pyinstaller windows_customizer/app.py --onefile
 
 The generated binary will be placed in the `dist` folder as `app.exe`.
 
+## WinJack
+
+`winjack.py` expands the customizer with context menu editing, startup item
+management, camera and microphone privacy controls and an easy way to pick a
+system font. Up to ten script buttons can be added to your right click menu. On
+startup or exit the interface plays a short sound effect.
+
+Run it with:
+
+```bash
+python -m windows_customizer.winjack
+```
+
+
 ## Wizard War I Skeleton
 
 A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support, including example input bindings for casting with each arm. The game is designed from a first-person perspective. Once players reach level five they can swap token quick slots using the `X` button for the left arm and `Y` for the right. A settings screen on the main menu lets you remap these controls and adjust audio or video preferences. See `WizardWarI/README.md` for build instructions.

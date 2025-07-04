@@ -1,236 +1,51 @@
-# AI GUI
+# WebGPT
 
-This project contains a minimal example of a Python GUI application that uses a language model for text generation, provides simple image creation, and demonstrates a network request. The GUI is built with Tkinter, and the model uses the `transformers` library.
+![webGPT](other/misc/header.png)
 
-## Features
+After six years of development, WebGPU is about to launch across most major web browsers. This is massive: web applications now have near-native access to the GPU, with the added capacity of compute shaders.
 
-- Text generation using a small pretrained model (distilgpt2)
-- Image creation using Pillow
-- Network interface example using `requests`
-- Simple language pack structure
+WebGPT is a vanilla JS and HTML implementation of a transformer model, intended as a proof-of-concept as well as educational resource. WebGPT has been tested to be working with models up to 500 M parameters, though could likely support far more with further testing/optimization.
 
-## Running
+### Current Stats
+2020 M1 Mac: 3ms/token at 5M parameters with f32 precision.  
+2020 M1 Mac: 30ms/token at 117M parameters with f32 precision.  
+2020 M1 Mac: 70ms/token at 377M parameters with f32 precision.  
+2020 M1 Mac: 120ms/token at 775M parameters with f32 precision.  
+1.5B is working but unstable, sitting around 1000ms/token due to inefficiencies.  
 
-Install the dependencies and run the GUI:
+## Running WebGPT
 
-```bash
-pip install -r requirements.txt
-python -m ai_gui.app
-```
+Running WebGPT is remarkably simple, as it's just a set of HTML + JS files. Since WebGPU is still in the process of being released, you'll need to open with a compatible browser. WebGPU is currently available on Chrome v113 but the most straightforward way to ensure proper functionality is to install [Chrome Canary](https://www.google.com/chrome/canary/) or Edge Canary.
 
-## Linux ChatGPT Desktop Assistant
+I've included two different models: a toy GPT-Shakespeare model (which is severly undertrained haha) and GPT-2 117M. See main.js for more information on how to run these models. If you want to import custom models, take a look at misc/conversion_scripts.
 
-An additional script integrates ChatGPT with a simple Tkinter interface that can
-be launched from any Linux desktop. Set the `OPENAI_API_KEY` environment
-variable and run:
+If you want to try out WebGPT, visit the demo website here [KMeans.org](https://www.kmeans.org). I'd generally reccomend cloning the repo and running locally, just because loading the weights remotely is significantly slower.  
+Note: **You'll need to use Git LFS** to download the model files, after cloning the repository.
 
-```bash
-python -m ai_gui.chatgpt_desktop
-```
+![file sizes](other/misc/files.png)
 
-You may create a `.desktop` file pointing to this command so it appears in your
-application launcher.
+## Roadmap / Fixing Stupid Decisions
 
-## HTML Interface
+- [x] Embeddings / de-embeddings on GPU.
+- [x] Initializing pipelines on every step is incredibly inefficient.
+- [x] Key-value caching.
+- [x] Reuse buffers.
+- [x] Kernel shared memory for matmul!
+- [x] Destroy buffers after use!
+- [x] Create kernel instruction classes + optimize pipeline creation.
+- [X] Fuse all kernels.
+- [X] Optimize all other kernels.
+- [X] Compute pass splitting for larger models _(maxStorageBufferBindingSize)_
+- [ ] Run selection ops on GPU (topk, selection softmax)
+- [ ] Attention kernel is optimized for small models, not for large models where each head having it's own matmul is more efficient.
+- [ ] Investigate why attention cache isn't giving proper speed-ups.
+- [ ] Make simple instructional version without special stuff.
+- [ ] Optimize workgroup sizes, specifically for single row/col operations.
+- [ ] Convert into a package.
+- [ ] Write better comments + make Youtube explainer.
 
-A basic web interface is provided in the `html` directory. Open `html/index.html` in a browser or serve the folder with a simple HTTP server:
+## Acknowledgements
 
-```bash
-python -m http.server --directory html
-```
+When I started this project I had no idea how transformers worked or how to implement them (or GPUs or matmul kernels or WebGPU or tokenization for that matter), so Andrej Karpathy's series on neural networks and building GPT from scratch were invaluable: [Andrej's Youtube](https://www.youtube.com/@AndrejKarpathy). I've also used some code as well from the nanoGPT repository: [nanoGPT](https://github.com/karpathy/nanoGPT).
 
-The page allows you to send a prompt to the `/generate` endpoint of a backend server and displays the response.
-
-## Language Packs
-
-The GUI includes a simple language pack system. Prompts are available in American English (`en`, the default), Spanish (`es`), French (`fr`) and German (`de`). Retrieve them with:
-
-```python
-from ai_gui.language_pack import get_prompts
-prompts = get_prompts('es')
-```
-
-The default language is American English if an unknown code is provided.
-
-## Windows Customizer
-
-The repository also includes a small Windows-only GUI that can tweak a few
-appearance settings. It lets you pick a new accent colour, switch the Start menu
-to the dark theme, set a custom logon background and draw a mouse cursor. Your
-choices are saved to `~/.win_customizer.json`.
-
-Run it with:
-
-```bash
-python -m windows_customizer.app
-```
-
-To bundle the customizer as a standalone executable run PyInstaller on a
-Windows machine:
-
-```bash
-pip install pyinstaller
-pyinstaller windows_customizer/app.py --onefile
-```
-
-The generated binary will be placed in the `dist` folder as `app.exe`.
-
-## WinJack
-
-`winjack.py` expands the customizer with context menu editing, startup item
-management, camera and microphone privacy controls and an easy way to pick a
-system font. Up to ten script buttons can be added to your right click menu. On
-startup or exit the interface plays a short sound effect.
-
-Run it with:
-
-```bash
-python -m windows_customizer.winjack
-```
-
-
-## Wizard War I Skeleton
-
-A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support, including example input bindings for casting with each arm. The game is designed from a first-person perspective. Once players reach level five they can swap token quick slots using the `X` button for the left arm and `Y` for the right. A settings screen on the main menu lets you remap these controls and adjust audio or video preferences. See `WizardWarI/README.md` for build instructions.
-
-The project enables physics simulation for characters, spells and environmental objects so effects like power and area directly influence spell behavior.
-
-Interface text is localized. American English is the default with Spanish,
-French and German translations also available. Change your language in the game
-settings.
-
-Levitation tokens may be chained with power and area tokens. Once activated on an arm they cannot be swapped out for the rest of the match and increase movement speed based on the selected power token.
-Shield tokens likewise lock the chosen arm but surround the caster with a translucent barrier. Their damage reduction scales with the attached power token.
-Area tokens now offer a **Self** option for personal effects like shields and levitation. When levitating, the wizard rises slightly off the ground with the height determined by the chosen power token.
-
-Each token displays a small symbol and emits a coloured glow matching its attribute so you can quickly recognise power, area and elemental effects.
-
-Companion tokens can be spent to unlock hell hound allies. Each hound tier costs more tokens and grants more health and damage. Hounds take damage like any foe and, when one falls, another leaps in to replace it. You may swap the active hound in the character menu between rounds.
-Tokens are also used in a simple store where you can buy new hounds or robe styles. Robes provide attack and defence bonuses. Everyone automatically owns a colourful **tie dye robe** that unlocks a room-filling fireball by pulling **both triggers** at once, printing "I didn't ask how big the room is, I said I cast fireball!" for dramatic flair. A special **Speedy Robe** can also be purchased which shrinks you to one tenth size and triples your speed when both triggers are pressed. While this robe is active, your spells only deal **10 %** of their normal power and area.
-
-Opponents react to elements: water spells freeze them in place, electricity knocks them down stunned (interrupting the spell they were casting), fire sets them ablaze and explosive spells send them flying with a big physics impulse.
-
-Press the controller's **Menu** button to open the character menu where you arrange quick-slot chains and manage a large token inventory. Each arm starts with three slots and gains three more every ten levels.
-
-As you experiment with new token combinations the game automatically records each custom spell in a personal spell log accessible from this menu. Every time you discover a unique chain you'll unlock an achievement and can give the spell a custom name.
-=======
-The default language is English if an unknown code is provided.
-
-## Wizard War I Skeleton
-
-
-=======
-
-=======
-
-=======
-
-
-A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support, including example input bindings for casting with each arm. The game is designed from a first-person perspective. Once players reach level five they can swap token quick slots using the `X` button for the left arm and `Y` for the right. See `WizardWarI/README.md` for build instructions.
-
-The project enables physics simulation for characters, spells and environmental objects so effects like power and area directly influence spell behavior.
-
-Levitation tokens may be chained with power and area tokens. Once activated on an arm they cannot be swapped out for the rest of the match and increase movement speed based on the selected power token.
-Shield tokens likewise lock the chosen arm but surround the caster with a translucent barrier. Their damage reduction scales with the attached power token.
-
-
-=======
-
-
-Opponents react to elements: water spells freeze them in place, electricity knocks them down stunned, fire sets them ablaze and explosive spells send them flying with a big physics impulse.
-
-Press the controller's **Menu** button to open the character menu where you arrange quick-slot chains and manage a large token inventory. Each arm starts with three slots and gains three more every ten levels.
-
-
-=======
-=======
-
-
-Elemental effect tokens now cause subtle posture changes and small movement nudges when cast. Earth spells push the player slightly downward, air gently lifts them, fire prompts a short backward step, water slows briefly, electricity gives a small burst of speed and weapon summons perform a short lunge.
-Each effect also plays a short facial expression animation while the caster keeps their eyes locked on the opponent.
-
-An online multiplayer mode allows players to wager token chains against each other. A challenger can host a bet match with a set of tokens and another player may join if they can stake an identical chain. The winner receives all wagered tokens.
-
-=======
-
-=======
-
-
-For larger matches an **arena battle** mode supports up to twenty players. Each
-contestant adds their wager to a shared pool when joining. Anyone who survives
-sixty seconds takes back their tokens plus an equal bonus. Eliminated players
-forfeit their stake, leaving it in the pool. Once per day the accumulated pool
-is offered in a fifty‑player deathmatch where the last wizard standing wins the
-entire hoard.
-
-Duels take place in a random arena chosen from a sprawling dungeon, a dense
-forest, a shrinking island, a grand Roman colosseum or a steep mountain top.
-The selected environment determines where both players spawn but otherwise has
-no bearing on mechanics in this starter project.
-=======
-
-=======
-=======
-
-
-Experience is earned based on how long each duel lasts. Time under thirty seconds awards one XP per second, while matches longer than thirty seconds double the gain and those past ninety seconds double it again. The level cap is 1000 with special titles at 666 and 777.
-
-Players can now design their wizard using a full character creation screen that includes size sliders, skin and hair colour pickers, eye colour selection, body type and hairstyle options.
-Reaching level 1000 grants automatic one-hit kills even in online matches, turning every duel into a quick draw.
-Each level also provides a small amount of additional damage resistance.
-Progress can be saved to a slot and loaded later through a basic save system.
-=======
-
-=======
-
-=======
-
-
-
-Spells now emit dynamic lighting that matches their element colour and intensity,
-enhancing shading when Lumen global illumination is enabled in your project.
-Spells also play positional surround sound effects for added immersion, and the
-main menu features the classic "In the Hall of the Mountain King" as background
-music.
-
-Between matches your wizard relaxes in a small **home castle** that acts as a
-waiting room. Here you can open a chest to review your token stash, admire a
-display of collected robes and browse books listing every spell you've learned
-along with earned achievements.
-
-Taunts are fully customisable. Purchase extra shout attacks in the token store
-then edit the accompanying text in the character menu. Press the left thumbstick
-to bellow the equipped taunt; any swear words are automatically censored.
-=======
-
-To keep gameplay smooth the project locks the frame rate to **60 FPS** when the
-match starts. The cap can be adjusted using the `t.MaxFPS` console command if
-desired.
-=======
-=======
-=======
-=======
-=======
-A minimal Unreal Engine project is available in the `WizardWarI` directory. It provides starter source files for a 1-on-1 spell combat game with Xbox controller support. See `WizardWarI/README.md` for build instructions.
-
-
-
-
-
-
-## Build Debian ISO with ChatGPT Assistant
-
-
-A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` is a bootable hybrid ISO that boots into a simple Openbox session and automatically launches the assistant.
-=======
-A helper script (`build_debian_chatgpt_iso.sh`) uses debootstrap and live-build tools to create a minimal Debian image with the ChatGPT desktop app preinstalled. Run it as root on a Debian system with `debootstrap`, `live-build`, and `xorriso` available. The resulting `chatgpt_debian.iso` boots into a simple Openbox session and automatically launches the assistant.
-
-## HP Boot Video
-
-A basic GUI for Windows that lets you pick a video to play automatically when you log in. It simply creates a small batch file in your Startup folder which launches the chosen video with your default media player. Note that HP firmware does not support replacing the BIOS boot logo with a video, so this tool only provides a video after Windows has started.
-
-Run it with:
-
-```bash
-python -m hp_boot_video.app
-```
+I copied from LatitudeGames' implementation of OpenAI's GPT-3 tokenizer in Javascript: [GPT-3-Encoder](https://github.com/latitudegames/GPT-3-Encoder).

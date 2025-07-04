@@ -1,13 +1,1 @@
-# Ignore Python cache and build files
-__pycache__/
-*.pyc
-
-# Unreal Engine build artifacts
-Build/
-Binaries/
-DerivedDataCache/
-Saved/
-Intermediate/
-dist/
-build/
-*.spec
+weights/large-models

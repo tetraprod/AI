@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ô╥┴ÿ`■,36▌</title>
+<style>
+  body { font-family: sans-serif; margin: 2em; }
+  ul { list-style: none; padding-left: 0; }
+  li { margin-bottom: 0.5em; }
+</style>
+</head>
+<body>
+<h1>ô╥┴ÿ`■,36▌</h1>
+<div id="main"></div>
+<script>
+async function fetchJSON(url, options={}) {
+  const res = await fetch(url, Object.assign({headers:{'Content-Type':'application/json'}}, options));
+  if(!res.ok) { alert('Request failed'); return []; }
+  return res.json();
+}
+
+function showGroups() {
+  fetchJSON('/groups').then(groups => {
+    const main = document.getElementById('main');
+    main.innerHTML = `
+      <h2>Groups</h2>
+      <ul>${groups.map(g => `<li><a href="#g${g.id}">${g.name}</a></li>`).join('')}</ul>
+      <h3>Create Group</h3>
+      <input id="gname" placeholder="Group name"> <button onclick="createGroup()">Create</button>
+    `;
+  });
+}
+
+function createGroup() {
+  const name = document.getElementById('gname').value;
+  fetchJSON('/groups', {method:'POST', body:JSON.stringify({name})}).then(showGroups);
+}
+
+function showGroup(id) {
+  fetchJSON('/groups/'+id).then(g => {
+    const main = document.getElementById('main');
+    main.innerHTML = `
+      <h2>${g.name}</h2>
+      <div>
+        <h3>Posts</h3>
+        <ul id="posts">${g.posts.map(p => `<li>${p.text}</li>`).join('')}</ul>
+        <input id="postText" placeholder="New post"> <button onclick="addPost(${id})">Post</button>
+      </div>
+      <div>
+        <h3>Rules</h3>
+        <ul id="rules">${g.rules.map((r,i)=>`<li>${r.text} (${r.votes}) <button onclick="voteRule(${id},${i},1)">+</button> <button onclick="voteRule(${id},${i},-1)">-</button></li>`).join('')}</ul>
+        <input id="ruleText" placeholder="New rule"> <button onclick="addRule(${id})">Add Rule</button>
+      </div>
+      <p><a href="#">Back</a></p>
+    `;
+  });
+}
+
+function addPost(id) {
+  const text = document.getElementById('postText').value;
+  fetchJSON('/groups/'+id+'/posts', {method:'POST', body:JSON.stringify({text})}).then(()=>showGroup(id));
+}
+
+function addRule(id) {
+  const text = document.getElementById('ruleText').value;
+  fetchJSON('/groups/'+id+'/rules', {method:'POST', body:JSON.stringify({text})}).then(()=>showGroup(id));
+}
+
+function voteRule(id, idx, delta) {
+  fetchJSON('/groups/'+id+'/rules/'+idx+'/vote', {method:'POST', body:JSON.stringify({delta})}).then(()=>showGroup(id));
+}
+
+window.addEventListener('hashchange', () => {
+  const h = location.hash;
+  if(h.startsWith('#g')) showGroup(h.slice(2)); else showGroups();
+});
+
+showGroups();
+</script>
+</body>
+</html>

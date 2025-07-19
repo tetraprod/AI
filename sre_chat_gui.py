@@ -6,6 +6,7 @@ from sre_engine import (
     ArchetypeEngine,
     VisitorMemory,
     core_from_text,
+    generate_response,
 )
 
 
@@ -42,6 +43,10 @@ class SREChatGUI(tk.Tk):
         core = core_from_text(text)
         self.memory.memory[core.visitor_id] = core
         self.dep.add_entry(core)
+
+        reply = generate_response(core)
+        self.output_box.insert(tk.END, f"SRE: {reply}\n")
+        self.output_box.see(tk.END)
 
         cluster = self.dep.detect_emergent_patterns()
         if cluster:

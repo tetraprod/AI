@@ -2,6 +2,7 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass
 import uuid
 import random
+from textblob import TextBlob
 
 # ----------------------------
 # EMOTIONAL CORE REPRESENTATION
@@ -100,13 +101,30 @@ class VisitorMemory:
 # ----------------------------
 
 def core_from_text(text: str) -> EmotionalCore:
-    """Create an EmotionalCore from raw text."""
+    """Create an EmotionalCore from raw text with basic sentiment analysis."""
     words = [w.strip() for w in text.split() if w.strip()]
+    blob = TextBlob(text)
+    polarity = blob.sentiment.polarity
+    if polarity > 0.3:
+        tone = "positive"
+    elif polarity < -0.3:
+        tone = "negative"
+    else:
+        tone = "neutral"
     return EmotionalCore(
         visitor_id=str(uuid.uuid4()),
-        tone_bias="neutral",
+        tone_bias=tone,
         metaphor_field=words[:5] or ["echo"],
         emotional_arc="conversation",
         archetype_affinity={},
         subversion_resistance=random.uniform(0.4, 0.9),
     )
+
+
+def generate_response(core: EmotionalCore) -> str:
+    """Create a simple textual response based on tone bias."""
+    if core.tone_bias == "positive":
+        return "I'm glad to hear that. Tell me more."
+    if core.tone_bias == "negative":
+        return "I'm sorry to hear that. How can I help?"
+    return "Thank you for sharing."

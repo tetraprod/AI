@@ -2,6 +2,8 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass
 import uuid
 import random
+from textblob import TextBlob
+=======
 
 # ----------------------------
 # EMOTIONAL CORE REPRESENTATION
@@ -100,6 +102,27 @@ class VisitorMemory:
 # ----------------------------
 
 def core_from_text(text: str) -> EmotionalCore:
+    """Create an EmotionalCore from raw text with expanded tone detection."""
+    words = [w.strip() for w in text.split() if w.strip()]
+    blob = TextBlob(text)
+    polarity = blob.sentiment.polarity
+
+    tone = "neutral"
+    if "?" in text and -0.3 <= polarity <= 0.3:
+        tone = "curious"
+    if polarity > 0.6 or ("!" in text and polarity > 0):
+        tone = "excited"
+    elif polarity > 0.3:
+        tone = "positive"
+    elif polarity < -0.6:
+        tone = "anxious"
+    elif polarity < -0.3:
+        tone = "negative"
+
+    return EmotionalCore(
+        visitor_id=str(uuid.uuid4()),
+        tone_bias=tone,
+=======
     """Create an EmotionalCore from raw text."""
     words = [w.strip() for w in text.split() if w.strip()]
     return EmotionalCore(
@@ -110,3 +133,19 @@ def core_from_text(text: str) -> EmotionalCore:
         archetype_affinity={},
         subversion_resistance=random.uniform(0.4, 0.9),
     )
+
+
+def generate_response(core: EmotionalCore) -> str:
+    """Create a simple textual response based on tone bias."""
+    if core.tone_bias == "positive":
+        return "I'm glad to hear that. Tell me more."
+    if core.tone_bias == "negative":
+        return "I'm sorry to hear that. How can I help?"
+    if core.tone_bias == "excited":
+        return "That's quite exciting! What's making you feel so energized?"
+    if core.tone_bias == "anxious":
+        return "It sounds like something is worrying you. Want to talk about it?"
+    if core.tone_bias == "curious":
+        return "Great question! Let's explore that together."
+    return "Thank you for sharing."
+=======

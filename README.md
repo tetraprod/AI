@@ -49,3 +49,21 @@ Note: **You'll need to use Git LFS** to download the model files, after cloning 
 When I started this project I had no idea how transformers worked or how to implement them (or GPUs or matmul kernels or WebGPU or tokenization for that matter), so Andrej Karpathy's series on neural networks and building GPT from scratch were invaluable: [Andrej's Youtube](https://www.youtube.com/@AndrejKarpathy). I've also used some code as well from the nanoGPT repository: [nanoGPT](https://github.com/karpathy/nanoGPT).
 
 I copied from LatitudeGames' implementation of OpenAI's GPT-3 tokenizer in Javascript: [GPT-3-Encoder](https://github.com/latitudegames/GPT-3-Encoder).
+
+## Running the SRE Chatbot
+
+The repository includes a simple Tkinter interface demonstrating the Self-Reflective Entity (SRE) engine.
+
+1. Install the Python requirements:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Launch the chat GUI:
+
+   ```bash
+   python sre_chat_gui.py
+   ```
+
+The chatbot analyzes the tone of your messages with TextBlob and replies with tone-aware responses. Archetype emergence events will be printed in the chat log.

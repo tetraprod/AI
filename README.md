@@ -72,8 +72,13 @@ The chatbot analyzes the tone of your messages with TextBlob and replies with to
 
 `BrainEngine` is a lightweight module for experimentation with higher level
 cognition.  It exposes basic `reason`, `solve_problem` and memory management
-helpers.  Memories are kept in a simple dictionary and a configurable limit
+helpers. Memories are kept in a simple dictionary and a configurable limit
 prevents unbounded growth.  All actions are logged so you can extend the engine
-with richer logic.  While the SRE engine focuses on tone analysis and archetype
-emergence, BrainEngine can track additional knowledge or context. The chat GUI
-instantiates both engines so you can build on this example.
+with richer logic.
+
+The updated implementation integrates an optional LLM backend for more advanced
+reasoning and problem solving. Memories carry metadata such as timestamps,
+access counts and tags which enables simple contextual retrieval. While the SRE
+engine focuses on tone analysis and archetype emergence, BrainEngine can track
+additional knowledge or context. The chat GUI instantiates both engines so you
+can build on this example.

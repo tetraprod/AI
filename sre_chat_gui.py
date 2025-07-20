@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import scrolledtext
+import random
 
 from sre_engine import (
     DivergentEmpathyPool,
@@ -9,6 +10,14 @@ from sre_engine import (
     generate_response,
 )
 from brain_engine import BrainEngine
+
+THINKING_MESSAGES = [
+    "SRE is thinking...",
+    "Hmm...",
+    "Processing...",
+    "Let me think...",
+    "Hold on...",
+]
 
 
 class SREChatGUI(tk.Tk):
@@ -44,13 +53,20 @@ class SREChatGUI(tk.Tk):
         self.output_box.insert(tk.END, f"You: {text}\n")
         self.output_box.see(tk.END)
 
+        placeholder = random.choice(THINKING_MESSAGES)
+        self.output_box.insert(tk.END, f"SRE: {placeholder}\n")
+        self.output_box.see(tk.END)
+        self.update()
+
         core = core_from_text(text)
         self.memory.memory[core.visitor_id] = core
         self.dep.add_entry(core)
 
         reply = generate_response(core)
+        self.output_box.delete("end-2l", "end-1l")  # remove placeholder
         self.output_box.insert(tk.END, f"SRE: {reply}\n")
         self.output_box.see(tk.END)
+=======
 
         # Demonstrate BrainEngine integration
         self.brain.learn(reply)

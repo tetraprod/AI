@@ -2,6 +2,7 @@ from typing import Any, Optional, Dict, List
 import logging
 from datetime import datetime
 import json
+from pathlib import Path
 
 
 class BrainEngine:
@@ -13,6 +14,7 @@ class BrainEngine:
         self.memory_limit = memory_limit
         self._setup_logging()
         self.logger.info("BrainEngine initialized.")
+        self._load_optical_engine_datasheet()
 
     def _setup_logging(self) -> None:
         """Configure logging for the engine."""
@@ -21,6 +23,22 @@ class BrainEngine:
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         )
         self.logger = logging.getLogger(__name__)
+
+    def _load_optical_engine_datasheet(self) -> None:
+        """Load the optical engine datasheet into memory if available."""
+        datasheet_path = Path(__file__).with_name("datasheets").joinpath(
+            "optical_engine_datasheet.json"
+        )
+        if not datasheet_path.exists():
+            self.logger.warning("Optical engine datasheet not found at %s", datasheet_path)
+            return
+        try:
+            with open(datasheet_path, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
+            self.learn("optical_engine_datasheet", data, tags=["datasheet", "optical"])
+            self.logger.info("Optical engine datasheet loaded into memory")
+        except Exception as exc:  # pragma: no cover - defensive
+            self.logger.warning("Failed to load optical engine datasheet: %s", exc)
 
     async def _call_llm(
         self,

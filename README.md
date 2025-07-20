@@ -82,3 +82,6 @@ access counts and tags which enables simple contextual retrieval. While the SRE
 engine focuses on tone analysis and archetype emergence, BrainEngine can track
 additional knowledge or context. The chat GUI instantiates both engines so you
 can build on this example.
+
+An example datasheet for an optical engine is loaded at startup to demonstrate
+the memory system. You can find it in `datasheets/optical_engine_datasheet.json`.

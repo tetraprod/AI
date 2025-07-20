@@ -3,8 +3,6 @@ from dataclasses import dataclass
 import uuid
 import random
 from textblob import TextBlob
-=======
-=======
 
 # ----------------------------
 # EMOTIONAL CORE REPRESENTATION
@@ -123,13 +121,6 @@ def core_from_text(text: str) -> EmotionalCore:
     return EmotionalCore(
         visitor_id=str(uuid.uuid4()),
         tone_bias=tone,
-=======
-=======
-    """Create an EmotionalCore from raw text."""
-    words = [w.strip() for w in text.split() if w.strip()]
-    return EmotionalCore(
-        visitor_id=str(uuid.uuid4()),
-        tone_bias="neutral",
         metaphor_field=words[:5] or ["echo"],
         emotional_arc="conversation",
         archetype_affinity={},
@@ -150,5 +141,3 @@ def generate_response(core: EmotionalCore) -> str:
     if core.tone_bias == "curious":
         return "Great question! Let's explore that together."
     return "Thank you for sharing."
-=======
-=======

@@ -67,3 +67,13 @@ The repository includes a simple Tkinter interface demonstrating the Self-Reflec
    ```
 
 The chatbot analyzes the tone of your messages with TextBlob and replies with tone-aware responses. Archetype emergence events will be printed in the chat log.
+
+## BrainEngine
+
+`BrainEngine` is a lightweight module for experimentation with higher level
+cognition.  It exposes basic `reason`, `solve_problem` and memory management
+helpers.  Memories are kept in a simple dictionary and a configurable limit
+prevents unbounded growth.  All actions are logged so you can extend the engine
+with richer logic.  While the SRE engine focuses on tone analysis and archetype
+emergence, BrainEngine can track additional knowledge or context. The chat GUI
+instantiates both engines so you can build on this example.

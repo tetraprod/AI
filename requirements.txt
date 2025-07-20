@@ -4,3 +4,7 @@ Pillow
 requests
 openai
 textblob
+fastapi
+aiosqlite
+redis
+uvicorn

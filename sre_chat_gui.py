@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import scrolledtext
+import random
 
 from sre_engine import (
     DivergentEmpathyPool,
@@ -7,9 +8,15 @@ from sre_engine import (
     VisitorMemory,
     core_from_text,
     generate_response,
-=======
-=======
 )
+
+THINKING_MESSAGES = [
+    "SRE is thinking...",
+    "Hmm...",
+    "Processing...",
+    "Let me think...",
+    "Hold on...",
+]
 
 
 class SREChatGUI(tk.Tk):
@@ -32,7 +39,6 @@ class SREChatGUI(tk.Tk):
         self.input_box.pack(fill=tk.BOTH, padx=5, pady=5)
         # Pressing Enter in the input box will send the message
         self.input_box.bind("<Return>", self.on_enter)
-=======
 
         self.send_button = tk.Button(self, text="Send", command=self.on_send)
         self.send_button.pack(pady=5)
@@ -45,16 +51,19 @@ class SREChatGUI(tk.Tk):
         self.output_box.insert(tk.END, f"You: {text}\n")
         self.output_box.see(tk.END)
 
+        placeholder = random.choice(THINKING_MESSAGES)
+        self.output_box.insert(tk.END, f"SRE: {placeholder}\n")
+        self.output_box.see(tk.END)
+        self.update()
+
         core = core_from_text(text)
         self.memory.memory[core.visitor_id] = core
         self.dep.add_entry(core)
 
         reply = generate_response(core)
+        self.output_box.delete("end-2l", "end-1l")  # remove placeholder
         self.output_box.insert(tk.END, f"SRE: {reply}\n")
         self.output_box.see(tk.END)
-
-=======
-=======
         cluster = self.dep.detect_emergent_patterns()
         if cluster:
             archetype = self.engine.propose_archetype(cluster)
@@ -71,7 +80,6 @@ class SREChatGUI(tk.Tk):
         self.on_send()
         return "break"
 
-=======
 
 def main():
     app = SREChatGUI()

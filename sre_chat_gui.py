@@ -7,6 +7,8 @@ from sre_engine import (
     VisitorMemory,
     core_from_text,
     generate_response,
+=======
+=======
 )
 
 
@@ -30,6 +32,7 @@ class SREChatGUI(tk.Tk):
         self.input_box.pack(fill=tk.BOTH, padx=5, pady=5)
         # Pressing Enter in the input box will send the message
         self.input_box.bind("<Return>", self.on_enter)
+=======
 
         self.send_button = tk.Button(self, text="Send", command=self.on_send)
         self.send_button.pack(pady=5)
@@ -50,6 +53,8 @@ class SREChatGUI(tk.Tk):
         self.output_box.insert(tk.END, f"SRE: {reply}\n")
         self.output_box.see(tk.END)
 
+=======
+=======
         cluster = self.dep.detect_emergent_patterns()
         if cluster:
             archetype = self.engine.propose_archetype(cluster)
@@ -66,6 +71,7 @@ class SREChatGUI(tk.Tk):
         self.on_send()
         return "break"
 
+=======
 
 def main():
     app = SREChatGUI()

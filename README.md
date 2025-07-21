@@ -6,12 +6,24 @@ After six years of development, WebGPU is about to launch across most major web 
 
 WebGPT is a vanilla JS and HTML implementation of a transformer model, intended as a proof-of-concept as well as educational resource. WebGPT has been tested to be working with models up to 500 M parameters, though could likely support far more with further testing/optimization.
 
+## UnifiedAI Example
+
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and `unifiedai.py` for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities.
+
 ### Current Stats
 2020 M1 Mac: 3ms/token at 5M parameters with f32 precision.  
 2020 M1 Mac: 30ms/token at 117M parameters with f32 precision.  
-2020 M1 Mac: 70ms/token at 377M parameters with f32 precision.  
-2020 M1 Mac: 120ms/token at 775M parameters with f32 precision.  
-1.5B is working but unstable, sitting around 1000ms/token due to inefficiencies.  
+2020 M1 Mac: 70ms/token at 377M parameters with f32 precision.
+2020 M1 Mac: 120ms/token at 775M parameters with f32 precision.
+1.5B is working but unstable, sitting around 1000ms/token due to inefficiencies.
+
+### Running UnifiedAI with Docker
+
+Use the provided `Dockerfile` and `docker-compose.yml` to start the API and a Redis instance:
+
+```bash
+docker-compose up --build
+```
 
 ## Running WebGPT
 

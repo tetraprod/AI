@@ -6,6 +6,10 @@ After six years of development, WebGPU is about to launch across most major web 
 
 WebGPT is a vanilla JS and HTML implementation of a transformer model, intended as a proof-of-concept as well as educational resource. WebGPT has been tested to be working with models up to 500 M parameters, though could likely support far more with further testing/optimization.
 
+## UnifiedAI Example
+
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and `unifiedai.py` for the source code.
+
 ### Current Stats
 2020 M1 Mac: 3ms/token at 5M parameters with f32 precision.  
 2020 M1 Mac: 30ms/token at 117M parameters with f32 precision.  
@@ -82,3 +86,6 @@ access counts and tags which enables simple contextual retrieval. While the SRE
 engine focuses on tone analysis and archetype emergence, BrainEngine can track
 additional knowledge or context. The chat GUI instantiates both engines so you
 can build on this example.
+
+An example datasheet for an optical engine is loaded at startup to demonstrate
+the memory system. You can find it in `datasheets/optical_engine_datasheet.json`.

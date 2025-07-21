@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import scrolledtext
+import random
 
 from sre_engine import (
     DivergentEmpathyPool,
@@ -7,9 +8,15 @@ from sre_engine import (
     VisitorMemory,
     core_from_text,
     generate_response,
-=======
-=======
 )
+
+THINKING_MESSAGES = [
+    "SRE is thinking...",
+    "Hmm...",
+    "Processing...",
+    "Let me think...",
+    "Hold on...",
+]
 
 
 class SREChatGUI(tk.Tk):
@@ -27,12 +34,17 @@ class SREChatGUI(tk.Tk):
         self.output_box = scrolledtext.ScrolledText(self, height=15)
         self.output_box.pack(fill=tk.BOTH, padx=5, pady=5)
         self.output_box.insert(tk.END, "SRE ready.\n")
+        self.output_box.tag_config("positive", foreground="green")
+        self.output_box.tag_config("negative", foreground="red")
+        self.output_box.tag_config("excited", foreground="orange")
+        self.output_box.tag_config("anxious", foreground="purple")
+        self.output_box.tag_config("curious", foreground="blue")
+        self.output_box.tag_config("neutral", foreground="black")
 
         self.input_box = scrolledtext.ScrolledText(self, height=4)
         self.input_box.pack(fill=tk.BOTH, padx=5, pady=5)
         # Pressing Enter in the input box will send the message
         self.input_box.bind("<Return>", self.on_enter)
-=======
 
         self.send_button = tk.Button(self, text="Send", command=self.on_send)
         self.send_button.pack(pady=5)
@@ -45,16 +57,22 @@ class SREChatGUI(tk.Tk):
         self.output_box.insert(tk.END, f"You: {text}\n")
         self.output_box.see(tk.END)
 
+        placeholder = random.choice(THINKING_MESSAGES)
+        self.output_box.insert(tk.END, f"SRE: {placeholder}\n")
+        self.output_box.see(tk.END)
+        self.update()
+
         core = core_from_text(text)
         self.memory.memory[core.visitor_id] = core
+        if core.visitor_id not in self.memory.primordial:
+            self.memory.primordial[core.visitor_id] = "Wanderer"
+        self.memory.add_message(core.visitor_id, text)
         self.dep.add_entry(core)
 
         reply = generate_response(core)
-        self.output_box.insert(tk.END, f"SRE: {reply}\n")
+        self.output_box.delete("end-2l", "end-1l")  # remove placeholder
+        self.output_box.insert(tk.END, f"SRE: {reply}\n", core.tone_bias)
         self.output_box.see(tk.END)
-
-=======
-=======
         cluster = self.dep.detect_emergent_patterns()
         if cluster:
             archetype = self.engine.propose_archetype(cluster)
@@ -71,7 +89,6 @@ class SREChatGUI(tk.Tk):
         self.on_send()
         return "break"
 
-=======
 
 def main():
     app = SREChatGUI()

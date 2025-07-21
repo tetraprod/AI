@@ -10,6 +10,7 @@ WebGPT is a vanilla JS and HTML implementation of a transformer model, intended 
 
 The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and `unifiedai.py` for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities.
 =======
+=======
 The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and `unifiedai.py` for the source code.
 
 ### Current Stats

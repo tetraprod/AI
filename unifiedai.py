@@ -4,6 +4,7 @@ import logging
 import signal
 from typing import Any, Optional, AsyncGenerator
 =======
+=======
 import logging
 from typing import Optional, AsyncGenerator
 
@@ -13,6 +14,7 @@ from contextlib import asynccontextmanager
 import redis.asyncio as redis
 import aiosqlite
 from transformers import pipeline
+=======
 =======
 from textblob import TextBlob
 
@@ -46,6 +48,7 @@ class SoulEngine:
         }
         base = responses.get(emotion, "I see.")
 =======
+=======
 
     async def analyze_emotion(self, text: str) -> str:
         """Return a basic emotion label for the text."""
@@ -67,6 +70,7 @@ class SoulEngine:
             "negative": "I'm sorry to hear that.",
             "neutral": "I understand.",
         }.get(emotion, "I see.")
+ main
         return f"{base} You said: {text}"
 
 
@@ -96,6 +100,7 @@ class BrainEngine:
             )
             await self.db.commit()
 =======
+=======
         async with aiosqlite.connect(self.db_path) as db:
             await db.execute(
                 "CREATE TABLE IF NOT EXISTS memories (key TEXT PRIMARY KEY, value TEXT)"
@@ -121,6 +126,7 @@ class BrainEngine:
                     await self.db.execute("UPDATE memories SET access_count = access_count + 1 WHERE key = ?", (key,))
                     await self.db.commit()
                     return row[0]
+=======
 =======
             async with aiosqlite.connect(self.db_path) as db:
                 async with db.execute(
@@ -163,6 +169,7 @@ class BrainEngine:
     async def close(self) -> None:
         await self.db.close()
 =======
+=======
         """Very simple reasoning: echo known memories or store new."""
         mem = await self.retrieve_memory(text)
         if mem:
@@ -200,6 +207,7 @@ class OpticalEngine:
             self.logger.error("Publish failed: %s", exc)
             return False
 =======
+=======
     def __init__(self, url: str = "redis://localhost:6379/0") -> None:
         self.redis = redis.from_url(url)
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -224,6 +232,7 @@ class OpticalEngine:
         """Placeholder for future message handling."""
         self.logger.info("Received message: %s", message)
 
+=======
 =======
 
 class AuraEngine:
@@ -254,6 +263,7 @@ class AuraEngine:
             return False
         if any(word in lowered for word in ["bias", "discriminate"]):
 =======
+=======
     def __init__(self) -> None:
         self.forbidden = {"hate", "kill", "malicious"}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -263,6 +273,7 @@ class AuraEngine:
         lowered = text.lower()
         if any(word in lowered for word in self.forbidden):
             self.logger.warning("Blocked unethical input: %s", text)
+ main
             return False
         return True
 
@@ -494,6 +505,7 @@ class NetworkFeatureManager:
 
 
 =======
+=======
 class UnifiedAI:
     """Central orchestrator coordinating all engines."""
 
@@ -553,6 +565,7 @@ async def lifespan(app: FastAPI):
         yield
     finally:
         await ai.close()
+=======
 =======
         self.soul = SoulEngine()
         self.brain = BrainEngine()
@@ -624,6 +637,7 @@ async def metrics():
         "memory_count": count,
         "enabled_network_features": ai.list_enabled_features(),
     }
+=======
 =======
 class Interaction(BaseModel):
     message: str

@@ -1,6 +1,7 @@
 # UnifiedAI
 
 =======
+=======
 `UnifiedAI` is a minimal async engine that relies on Redis for short term storage.
 It exposes a `connect()` method to establish the connection and a `close()`
 coroutine to gracefully shut it down.
@@ -29,6 +30,7 @@ UnifiedAI is a modular architecture that combines four engines to provide empath
 - **OpticalEngine** – publishes events through Redis with optional networking features like smart packet shaping.
 - **AuraEngine** – validates output against rules loaded from `ethics_rules.json` for ethical compliance.
 =======
+=======
 - **SoulEngine** – detects sentiment in user messages and crafts human‑like replies.
 - **BrainEngine** – stores memories in SQLite and performs simple reasoning based on past interactions.
 - **OpticalEngine** – communicates through Redis channels to broadcast events.
@@ -51,6 +53,7 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
    ```bash
    curl -X POST "http://localhost:8000/query" \
         -H "Content-Type: application/json" -d '{"query": "Hello there"}'
+=======
 =======
    curl -X POST -H "Content-Type: application/json" \
         -d '{"message": "Hello there"}' http://localhost:8000/chat
@@ -274,4 +277,5 @@ future integrations. Example entries include:
 Features are disabled by default. Enable them using the API or by calling
 `UnifiedAI.enable_feature()` with the feature key from `NETWORK_FEATURES`.
 
+=======
 =======

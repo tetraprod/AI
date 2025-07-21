@@ -5,6 +5,7 @@ requests
 openai
 textblob
 =======
+=======
 redis
 pytest
 pytest-asyncio
@@ -14,4 +15,5 @@ aiosqlite
 redis
 uvicorn
 pydantic
+=======
 =======

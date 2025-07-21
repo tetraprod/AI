@@ -4,6 +4,7 @@ Pillow
 requests
 openai
 textblob
+=======
 redis
 pytest
 pytest-asyncio
@@ -12,3 +13,5 @@ fastapi
 aiosqlite
 redis
 uvicorn
+pydantic
+=======

@@ -19,6 +19,10 @@ app = FastAPI(lifespan=lifespan)
 ```
 
 The provided context manager automatically invokes `engine.close()` after the
+`yield`, ensuring Redis resources are released. When not using the context
+manager, make sure to `await engine.close()` yourself during application
+shutdown to avoid open connections.
+=======
 `yield`, ensuring Redis resources are released.
 =======
 UnifiedAI is a modular architecture that combines four engines to provide empathetic interactions, reasoning, high‑speed data processing and ethical oversight.  It exposes a small FastAPI service for demonstration purposes.

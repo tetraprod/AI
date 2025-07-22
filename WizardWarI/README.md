@@ -7,14 +7,10 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Players chain `Power`, `Area`, and `Effect` tokens to cast spells.
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
-=======
-
-=======
-
-=======
 
 
-=======
+
+
 
 
 * The game is played in a first-person view.
@@ -24,10 +20,7 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Character creation and local multiplayer are planned features.
 * The main menu offers a settings screen for remapping controller buttons and tweaking audio or video options.
 * Online multiplayer lets players wager token chains against a challenger.
-=======
-* Online multiplayer lets players wager token chains against a challenger.
 
-=======
 
 
 * An arena battle mode supports up to twenty entrants. Each wizard adds their
@@ -40,9 +33,6 @@ Matches load one of five distinct arenas at random: a winding dungeon,
 a lush forest, a shrinking island, a Roman colosseum or a perilous mountain
 top. Only the scenery changes in this prototype but it sets the stage for
 future expansions.
-=======
-=======
-=======
 
 
 
@@ -67,15 +57,10 @@ Use the controller's **Menu** button to open the character menu. Here you custom
 The menu also tracks every unique token chain you assemble. When you craft a new combination you can name the spell and it will appear in a persistent spell log while unlocking an achievement to mark the discovery.
 
 Spells inflict special effects on opponents: water freezes them, electricity stuns and drops them (interrupting any spell they were casting), fire burns with an animation, and explosive spells launch them with strong physics.
-=======
 
 
-=======
 
 
-Use the controller's **Menu** button to open the character menu. Here you customise appearance, manage your token inventory and assign quick-load chains. Each arm begins with three slots and gains three more every ten levels.
-
-Spells inflict special effects on opponents: water freezes them, electricity stuns and drops them, fire burns with an animation, and explosive spells launch them with strong physics.
 
 Each elemental effect token prompts a different hand gesture and a reserved movement adjustment when cast: earth nudges the caster down, air lifts them slightly, fire steps them back, water slows them, electricity speeds them up for a moment and weapon summons lunge forward.
 Facial animation accompanies these gestures so the wizard's face reflects the casting style while their eyes remain focused on the opponent.
@@ -93,19 +78,14 @@ The token store also sells shout attacks that can be equipped as taunts. Set the
 American English is the default language for all in-game text. Spanish, French
 and German translations are available. Choose your language in the settings menu
 or start the game with `-culture=<code>` (for example `-culture=fr`).
-=======
 
 Gameplay is tuned for a smooth **60 FPS** and the frame rate is capped with the `t.MaxFPS 60` console command during play.
-=======
-=======
 Each elemental effect token prompts a different hand gesture and a reserved movement adjustment when cast: earth nudges the caster down, air lifts them slightly, fire steps them back, water slows them, electricity speeds them up for a moment and weapon summons lunge forward.
 Facial animation accompanies these gestures so the wizard's face reflects the casting style while their eyes remain focused on the opponent.
 
 Spells also spawn coloured point lights that scale with their power value, enhancing scene lighting and creating dramatic shadows.
 Spells emit 3D surround sound cues so the audio matches their position in the arena.
 The game plays "In the Hall of the Mountain King" on the main menu for atmospheric background music.
-=======
-=======
 * Character creation and local multiplayer are planned features.
 * Planned single-player mode lets you duel randomly generated wizards.
   Winning a match awards one **Power** token, one **Area** token, and two
@@ -132,22 +112,7 @@ The game plays "In the Hall of the Mountain King" on the main menu for atmospher
 6. For best visuals, open **Project Settings > Rendering** and enable Lumen
    Global Illumination and Hardware Ray Tracing so the spell lighting looks
    vibrant.
-=======
 
-6. For best visuals, open **Project Settings > Rendering** and enable Lumen
-   Global Illumination and Hardware Ray Tracing so the spell lighting looks
-   vibrant.
-=======
-
-6. For best visuals, open **Project Settings > Rendering** and enable Lumen
-   Global Illumination and Hardware Ray Tracing so the spell lighting looks
-   vibrant.
-=======
-
-6. For best visuals, open **Project Settings > Rendering** and enable Lumen
-   Global Illumination and Hardware Ray Tracing so the spell lighting looks
-   vibrant.
-=======
 
 
 
@@ -155,17 +120,11 @@ The game plays "In the Hall of the Mountain King" on the main menu for atmospher
 ## Note
 
 Compilation requires Unreal Engine which is not included in this repository. The project is provided as a starting template only.
-=======
 
-=======
 
-=======
 
-=======
 
-=======
 
-=======
 
 ## Roadmap
 

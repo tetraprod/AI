@@ -29,6 +29,7 @@ UnifiedAI is a modular architecture that combines four engines to provide empath
 - **BrainEngine** – stores memories in SQLite, applies rule-based reasoning, and learns from interactions.
 - **OpticalEngine** – publishes events through Redis with optional networking features like smart packet shaping.
 - **AuraEngine** – validates output against rules loaded from `ethics_rules.json` for ethical compliance.
+=======
 - **SoulEngine** – detects sentiment in user messages and crafts human‑like replies.
 - **BrainEngine** – stores memories in SQLite and performs simple reasoning based on past interactions.
 - **OpticalEngine** – communicates through Redis channels to broadcast events.
@@ -49,6 +50,7 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
    ```
 4. Interact with the system using `curl` or any HTTP client:
    ```bash
+=======
    curl -X POST "http://localhost:8000/query" \
         -H "Content-Type: application/json" -d '{"query": "Hello there"}'
    curl -X POST -H "Content-Type: application/json" \

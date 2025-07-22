@@ -1,6 +1,5 @@
 # WebGPT
 
-![webGPT](other/misc/header.png)
 
 After six years of development, WebGPU is about to launch across most major web browsers. This is massive: web applications now have near-native access to the GPU, with the added capacity of compute shaders.
 
@@ -8,6 +7,8 @@ WebGPT is a vanilla JS and HTML implementation of a transformer model, intended 
 
 ## UnifiedAI Example
 
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and `unifiedai.py` for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities.
+=======
 The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and the `unified_ai` package for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities. Our guiding principles are outlined in [DECLARATION.md](DECLARATION.md).
 
 ### Current Stats
@@ -34,7 +35,6 @@ I've included two different models: a toy GPT-Shakespeare model (which is severl
 If you want to try out WebGPT, visit the demo website here [KMeans.org](https://www.kmeans.org). I'd generally reccomend cloning the repo and running locally, just because loading the weights remotely is significantly slower.  
 Note: **You'll need to use Git LFS** to download the model files, after cloning the repository.
 
-![file sizes](other/misc/files.png)
 
 ## Roadmap / Fixing Stupid Decisions
 
@@ -102,6 +102,25 @@ can build on this example.
 An example datasheet for an optical engine is loaded at startup to demonstrate
 the memory system. You can find it in `datasheets/optical_engine_datasheet.json`.
 
+## Running the Modules and Tests
+
+1. Install the Python requirements:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Start the UnifiedAI API:
+   ```bash
+   python unifiedai.py
+   ```
+3. Launch the SRE chat GUI:
+   ```bash
+   python sre_chat_gui.py
+   ```
+4. Execute the test suite:
+   ```bash
+   pytest
+   ```
+=======
 ## Running Tests
 
 Install dependencies first:

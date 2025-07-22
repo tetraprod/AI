@@ -79,6 +79,10 @@ The repository includes a simple Tkinter interface demonstrating the Self-Reflec
    ```
 
 The chatbot analyzes the tone of your messages with TextBlob and replies with tone-aware responses. Archetype emergence events will be printed in the chat log.
+## UnifiedAI Control Panel
+
+Run `python united_ai_gui.py` to open the control panel and chat with UnifiedAI.
+
 
 ## BrainEngine
 

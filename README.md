@@ -8,6 +8,8 @@ WebGPT is a vanilla JS and HTML implementation of a transformer model, intended 
 ## UnifiedAI Example
 
 The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and run it with `python -m unified_ai`. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities. Our guiding principles are outlined in [DECLARATION.md](DECLARATION.md).
+=======
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and the `unified_ai` package for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities. Our guiding principles are outlined in [DECLARATION.md](DECLARATION.md).
 
 ### Current Stats
 2020 M1 Mac: 3ms/token at 5M parameters with f32 precision.  
@@ -118,5 +120,20 @@ the memory system. You can find it in `datasheets/optical_engine_datasheet.json`
    ```bash
    pytest
    ```
+=======
+
+## Running Tests
+
+Install dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then execute the test suite with:
+
+```bash
+pytest
+```
 
 If you have development packages installed via `requirements-dev.txt`, ensure they are installed before running the tests.

@@ -9,6 +9,7 @@ from .brain import BrainEngine
 from .optical import OpticalEngine
 from .aura import AuraEngine
 from .network_features import NetworkFeatureManager, NETWORK_FEATURES
+from .replicator import SystemReplicator
 
 
 class UnifiedAI:
@@ -73,3 +74,5 @@ async def lifespan(
         yield engine
     finally:
         await engine.close()
+
+__all__ = ["UnifiedAI", "lifespan", "SystemReplicator"]

@@ -1,17 +1,31 @@
 # WebGPT
 
-![webGPT](other/misc/header.png)
 
 After six years of development, WebGPU is about to launch across most major web browsers. This is massive: web applications now have near-native access to the GPU, with the added capacity of compute shaders.
 
 WebGPT is a vanilla JS and HTML implementation of a transformer model, intended as a proof-of-concept as well as educational resource. WebGPT has been tested to be working with models up to 500 M parameters, though could likely support far more with further testing/optimization.
 
+## UnifiedAI Example
+
+=======
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and run it with `python -m unified_ai`. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities. Our guiding principles are outlined in [DECLARATION.md](DECLARATION.md).
+=======
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and the `unified_ai` package for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities. Our guiding principles are outlined in [DECLARATION.md](DECLARATION.md).
+
 ### Current Stats
 2020 M1 Mac: 3ms/token at 5M parameters with f32 precision.  
 2020 M1 Mac: 30ms/token at 117M parameters with f32 precision.  
-2020 M1 Mac: 70ms/token at 377M parameters with f32 precision.  
-2020 M1 Mac: 120ms/token at 775M parameters with f32 precision.  
-1.5B is working but unstable, sitting around 1000ms/token due to inefficiencies.  
+2020 M1 Mac: 70ms/token at 377M parameters with f32 precision.
+2020 M1 Mac: 120ms/token at 775M parameters with f32 precision.
+1.5B is working but unstable, sitting around 1000ms/token due to inefficiencies.
+
+### Running UnifiedAI with Docker
+
+Use the provided `Dockerfile` and `docker-compose.yml` to start the API and a Redis instance:
+
+```bash
+docker-compose up --build
+```
 
 ## Running WebGPT
 
@@ -22,7 +36,6 @@ I've included two different models: a toy GPT-Shakespeare model (which is severl
 If you want to try out WebGPT, visit the demo website here [KMeans.org](https://www.kmeans.org). I'd generally reccomend cloning the repo and running locally, just because loading the weights remotely is significantly slower.  
 Note: **You'll need to use Git LFS** to download the model files, after cloning the repository.
 
-![file sizes](other/misc/files.png)
 
 ## Roadmap / Fixing Stupid Decisions
 
@@ -67,3 +80,62 @@ The repository includes a simple Tkinter interface demonstrating the Self-Reflec
    ```
 
 The chatbot analyzes the tone of your messages with TextBlob and replies with tone-aware responses. Archetype emergence events will be printed in the chat log.
+## UnifiedAI Control Panel
+
+Run `python united_ai_gui.py` to open the control panel and chat with UnifiedAI.
+
+
+## BrainEngine
+
+`BrainEngine` is a lightweight module for experimentation with higher level
+cognition.  It exposes basic `reason`, `solve_problem` and memory management
+helpers. Memories are kept in a simple dictionary and a configurable limit
+prevents unbounded growth.  All actions are logged so you can extend the engine
+with richer logic.
+
+The updated implementation integrates an optional LLM backend for more advanced
+reasoning and problem solving. Memories carry metadata such as timestamps,
+access counts and tags which enables simple contextual retrieval. While the SRE
+engine focuses on tone analysis and archetype emergence, BrainEngine can track
+additional knowledge or context. The chat GUI instantiates both engines so you
+can build on this example.
+
+An example datasheet for an optical engine is loaded at startup to demonstrate
+the memory system. You can find it in `datasheets/optical_engine_datasheet.json`.
+
+## Running the Modules and Tests
+
+1. Install the Python requirements:
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. Start the UnifiedAI API:
+   ```bash
+   python -m unified_ai
+   ```
+3. Launch the SRE chat GUI:
+   ```bash
+   python sre_chat_gui.py
+   ```
+4. Execute the test suite:
+   ```bash
+   pytest
+   ```
+=======
+=======
+
+## Running Tests
+
+Install dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then execute the test suite with:
+
+```bash
+pytest
+```
+
+If you have development packages installed via `requirements-dev.txt`, ensure they are installed before running the tests.

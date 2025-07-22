@@ -9,6 +9,23 @@ from sre_engine import (
     core_from_text,
     generate_response,
 )
+from brain_engine import BrainEngine
+
+THINKING_MESSAGES = [
+    "SRE is thinking...",
+    "Hmm...",
+    "Processing...",
+    "Let me think...",
+    "Hold on...",
+]
+
+THINKING_MESSAGES = [
+    "SRE is thinking...",
+    "Hmm...",
+    "Processing...",
+    "Let me think...",
+    "Hold on...",
+]
 
 THINKING_MESSAGES = [
     "SRE is thinking...",
@@ -30,6 +47,7 @@ class SREChatGUI(tk.Tk):
         self.dep = DivergentEmpathyPool()
         self.engine = ArchetypeEngine()
         self.memory = VisitorMemory()
+        self.brain = BrainEngine()
 
         self.output_box = scrolledtext.ScrolledText(self, height=15)
         self.output_box.pack(fill=tk.BOTH, padx=5, pady=5)
@@ -73,6 +91,15 @@ class SREChatGUI(tk.Tk):
         self.output_box.delete("end-2l", "end-1l")  # remove placeholder
         self.output_box.insert(tk.END, f"SRE: {reply}\n", core.tone_bias)
         self.output_box.see(tk.END)
+=======
+=======
+        self.output_box.insert(tk.END, f"SRE: {reply}\n")
+        self.output_box.see(tk.END)
+=======
+
+        # Demonstrate BrainEngine integration
+        self.brain.learn(reply)
+
         cluster = self.dep.detect_emergent_patterns()
         if cluster:
             archetype = self.engine.propose_archetype(cluster)

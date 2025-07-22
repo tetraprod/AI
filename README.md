@@ -97,3 +97,19 @@ can build on this example.
 
 An example datasheet for an optical engine is loaded at startup to demonstrate
 the memory system. You can find it in `datasheets/optical_engine_datasheet.json`.
+
+## Running Tests
+
+Install dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then execute the test suite with:
+
+```bash
+pytest
+```
+
+If you have development packages installed via `requirements-dev.txt`, ensure they are installed before running the tests.

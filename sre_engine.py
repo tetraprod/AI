@@ -5,6 +5,7 @@ import random
 from textblob import TextBlob
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 import spacy
+=======
 
 sentiment_analyzer = SentimentIntensityAnalyzer()
 nlp = spacy.load("en_core_web_sm")
@@ -152,6 +153,8 @@ def core_from_text(text: str) -> EmotionalCore:
         subjectivity=subjectivity,
         certainty=certainty,
         metaphor_field=noun_chunks[:5] or words[:5] or ["echo"],
+=======
+        metaphor_field=words[:5] or ["echo"],
         emotional_arc="conversation",
         archetype_affinity={},
         subversion_resistance=random.uniform(0.4, 0.9),

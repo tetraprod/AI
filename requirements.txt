@@ -1,8 +1,11 @@
-transformers
-torch
-Pillow
-requests
-openai
+fastapi
+aiosqlite
+redis
+uvicorn
+pydantic
 textblob
 vaderSentiment
 spacy
+=======
+pytest
+pytest-asyncio

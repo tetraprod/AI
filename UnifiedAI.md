@@ -57,6 +57,20 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
 
 The request is processed asynchronously. The reply contains an empathetic acknowledgement, demonstrates memory use and the message is published to Redis.
 
+## System Replicator
+
+UnifiedAI can duplicate itself using the `SystemReplicator` utility. Launching
+`python -m unified_ai.replicator` spawns a local copy of the running engine.
+Provide `--remote <channel>` to send the state to a remote listener via the
+`OpticalEngine`.
+
+```bash
+python -m unified_ai.replicator --remote replica_channel
+```
+
+An authentication token and optional encryption key may be supplied to secure
+the transfer.
+
 ## API Endpoints
 
 - `POST /query` – send a user query and receive the AI's response.

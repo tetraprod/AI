@@ -8,6 +8,7 @@ from .soul import SoulEngine
 from .brain import BrainEngine
 from .optical import OpticalEngine
 from .aura import AuraEngine
+from .speech import SpeechEngine
 from .network_features import NetworkFeatureManager, NETWORK_FEATURES
 from .replicator import SystemReplicator
 
@@ -23,6 +24,7 @@ class UnifiedAI:
         self.brain = BrainEngine()
         self.optical = OpticalEngine(self.redis, self.feature_manager)
         self.aura = AuraEngine()
+        self.speech = SpeechEngine(self.optical)
         self.logger = logging.getLogger(self.__class__.__name__)
         self.bg_tasks: list[asyncio.Task] = []
 
@@ -54,9 +56,13 @@ class UnifiedAI:
         emotion = await self.soul.analyze_emotion(text)
         memory_response = await self.brain.reason(text)
         await self.optical.transfer_data(memory_response, "UnifiedAI")
-        if await self.aura.validate_output(memory_response):
-            return await self.soul.craft_reply(memory_response, emotion)
-        return "Output blocked due to ethics rules"
+        if not await self.aura.validate_output(memory_response):
+            return "Output blocked due to ethics rules"
+        reply = await self.soul.craft_reply(memory_response, emotion)
+        analysis = await self.speech.analyze_text(reply)
+        speech_data = await self.speech.synthesize_speech(analysis)
+        await self.speech.transmit_speech(speech_data)
+        return reply
 
     async def _listener(self) -> None:
         async for message in self.optical.subscribe("UnifiedAI"):

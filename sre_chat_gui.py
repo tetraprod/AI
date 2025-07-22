@@ -27,6 +27,14 @@ THINKING_MESSAGES = [
     "Hold on...",
 ]
 
+THINKING_MESSAGES = [
+    "SRE is thinking...",
+    "Hmm...",
+    "Processing...",
+    "Let me think...",
+    "Hold on...",
+]
+
 
 class SREChatGUI(tk.Tk):
     """Simple Tkinter chat interface for the SRE engine."""
@@ -83,6 +91,7 @@ class SREChatGUI(tk.Tk):
         self.output_box.delete("end-2l", "end-1l")  # remove placeholder
         self.output_box.insert(tk.END, f"SRE: {reply}\n", core.tone_bias)
         self.output_box.see(tk.END)
+=======
 =======
         self.output_box.insert(tk.END, f"SRE: {reply}\n")
         self.output_box.see(tk.END)

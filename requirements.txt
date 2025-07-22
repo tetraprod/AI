@@ -7,5 +7,6 @@ textblob
 vaderSentiment
 spacy
 =======
+=======
 pytest
 pytest-asyncio

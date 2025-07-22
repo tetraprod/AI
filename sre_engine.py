@@ -3,7 +3,12 @@ from dataclasses import dataclass
 import uuid
 import random
 from textblob import TextBlob
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import spacy
+=======
 
+sentiment_analyzer = SentimentIntensityAnalyzer()
+nlp = spacy.load("en_core_web_sm")
 # ----------------------------
 # EMOTIONAL CORE REPRESENTATION
 # ----------------------------
@@ -12,6 +17,8 @@ from textblob import TextBlob
 class EmotionalCore:
     visitor_id: str
     tone_bias: str
+    subjectivity: float
+    certainty: float
     metaphor_field: List[str]
     emotional_arc: str
     archetype_affinity: Dict[str, float]
@@ -36,8 +43,8 @@ class DivergentEmpathyPool:
         entry = DEPEntry(
             core=core,
             archetype_distance=random.uniform(0.75, 1.0),
-            symbolic_density=random.uniform(0.6, 1.0),
-            emotional_opacity=random.uniform(0.5, 1.0),
+            symbolic_density=len(core.metaphor_field) / max(len(core.metaphor_field), 1),
+            emotional_opacity=1 - core.subjectivity,
         )
         self.entries.append(entry)
 
@@ -59,6 +66,10 @@ class Archetype:
     emotional_arc: str
     glyph_profile: Dict[str, str]
     invocation: str
+    age: int = 0
+
+    def decay(self):
+        self.age += 1
 
 class ArchetypeEngine:
     def __init__(self):
@@ -79,6 +90,10 @@ class ArchetypeEngine:
         self.active_archetypes.append(archetype)
         print(f"[RITE OF RECOGNITION] Archetype integrated: {archetype.name}")
 
+    def tick(self):
+        for arc in self.active_archetypes:
+            arc.decay()
+
 # ----------------------------
 # REINDEXING EXISTING VISITORS
 # ----------------------------
@@ -86,6 +101,8 @@ class ArchetypeEngine:
 class VisitorMemory:
     def __init__(self):
         self.memory: Dict[str, EmotionalCore] = {}
+        self.primordial: Dict[str, str] = {}
+        self.history: Dict[str, List[str]] = {}
 
     def reindex_visitors(self, archetype: Archetype):
         print(f"[REINDEXING] Checking visitor cores against: {archetype.name}")
@@ -96,31 +113,47 @@ class VisitorMemory:
                 if match > 0.75:
                     print(f"→ Visitor {vid} now aligns with {archetype.name} ({match:.2f})")
 
+    def add_message(self, vid: str, message: str):
+        self.history.setdefault(vid, []).append(message)
+        self.history[vid] = self.history[vid][-5:]
+
 # ----------------------------
 # HELPER FUNCTIONS
 # ----------------------------
 
 def core_from_text(text: str) -> EmotionalCore:
     """Create an EmotionalCore from raw text with expanded tone detection."""
-    words = [w.strip() for w in text.split() if w.strip()]
+    doc = nlp(text)
+    words = [token.text for token in doc if token.is_alpha]
+    noun_chunks = [chunk.text for chunk in doc.noun_chunks]
+
     blob = TextBlob(text)
     polarity = blob.sentiment.polarity
+    subjectivity = blob.sentiment.subjectivity
+    vader_scores = sentiment_analyzer.polarity_scores(text)
+    compound = vader_scores["compound"]
 
     tone = "neutral"
-    if "?" in text and -0.3 <= polarity <= 0.3:
+    if "?" in text and abs(compound) < 0.2:
         tone = "curious"
-    if polarity > 0.6 or ("!" in text and polarity > 0):
+    elif compound >= 0.6:
         tone = "excited"
-    elif polarity > 0.3:
+    elif compound >= 0.2:
         tone = "positive"
-    elif polarity < -0.6:
+    elif compound <= -0.6:
         tone = "anxious"
-    elif polarity < -0.3:
+    elif compound <= -0.2:
         tone = "negative"
+
+    certainty = (abs(compound) + (1 - subjectivity)) / 2
 
     return EmotionalCore(
         visitor_id=str(uuid.uuid4()),
         tone_bias=tone,
+        subjectivity=subjectivity,
+        certainty=certainty,
+        metaphor_field=noun_chunks[:5] or words[:5] or ["echo"],
+=======
         metaphor_field=words[:5] or ["echo"],
         emotional_arc="conversation",
         archetype_affinity={},

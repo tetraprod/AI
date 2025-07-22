@@ -8,6 +8,8 @@ WebGPT is a vanilla JS and HTML implementation of a transformer model, intended 
 ## UnifiedAI Example
 
 The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and `unifiedai.py` for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities.
+=======
+The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and the `unified_ai` package for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities. Our guiding principles are outlined in [DECLARATION.md](DECLARATION.md).
 
 ### Current Stats
 2020 M1 Mac: 3ms/token at 5M parameters with f32 precision.  
@@ -77,6 +79,10 @@ The repository includes a simple Tkinter interface demonstrating the Self-Reflec
    ```
 
 The chatbot analyzes the tone of your messages with TextBlob and replies with tone-aware responses. Archetype emergence events will be printed in the chat log.
+## UnifiedAI Control Panel
+
+Run `python united_ai_gui.py` to open the control panel and chat with UnifiedAI.
+
 
 ## BrainEngine
 
@@ -114,3 +120,19 @@ the memory system. You can find it in `datasheets/optical_engine_datasheet.json`
    ```bash
    pytest
    ```
+=======
+## Running Tests
+
+Install dependencies first:
+
+```bash
+pip install -r requirements.txt
+```
+
+Then execute the test suite with:
+
+```bash
+pytest
+```
+
+If you have development packages installed via `requirements-dev.txt`, ensure they are installed before running the tests.

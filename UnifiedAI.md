@@ -17,6 +17,9 @@ app = FastAPI(lifespan=lifespan)
 ```
 
 The provided context manager automatically invokes `engine.close()` after the
+`yield`, ensuring Redis resources are released. When not using the context
+manager, make sure to `await engine.close()` yourself during application
+shutdown to avoid open connections.
 `yield`, ensuring Redis resources are released.
 UnifiedAI is a modular architecture that combines four engines to provide empathetic interactions, reasoning, high‑speed data processing and ethical oversight.  It exposes a small FastAPI service for demonstration purposes.
 
@@ -26,6 +29,11 @@ UnifiedAI is a modular architecture that combines four engines to provide empath
 - **BrainEngine** – stores memories in SQLite, applies rule-based reasoning, and learns from interactions.
 - **OpticalEngine** – publishes events through Redis with optional networking features like smart packet shaping.
 - **AuraEngine** – validates output against rules loaded from `ethics_rules.json` for ethical compliance.
+=======
+- **SoulEngine** – detects sentiment in user messages and crafts human‑like replies.
+- **BrainEngine** – stores memories in SQLite and performs simple reasoning based on past interactions.
+- **OpticalEngine** – communicates through Redis channels to broadcast events.
+- **AuraEngine** – checks messages for forbidden content to enforce basic ethical rules.
 
 The orchestrator coordinates these engines so that input flows through AuraEngine for validation, then SoulEngine and BrainEngine to generate a reply, while OpticalEngine publishes logs asynchronously.
 
@@ -38,15 +46,32 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
 2. Start a local Redis server (required for the OpticalEngine).
 3. Run the API server:
    ```bash
-   python unifiedai.py
+   python -m unified_ai
    ```
 4. Interact with the system using `curl` or any HTTP client:
    ```bash
+=======
+   curl -X POST "http://localhost:8000/query" \
+        -H "Content-Type: application/json" -d '{"query": "Hello there"}'
    curl -X POST -H "Content-Type: application/json" \
         -d '{"message": "Hello there"}' http://localhost:8000/chat
    ```
 
 The request is processed asynchronously. The reply contains an empathetic acknowledgement, demonstrates memory use and the message is published to Redis.
+
+## System Replicator
+
+UnifiedAI can duplicate itself using the `SystemReplicator` utility. Launching
+`python -m unified_ai.replicator` spawns a local copy of the running engine.
+Provide `--remote <channel>` to send the state to a remote listener via the
+`OpticalEngine`.
+
+```bash
+python -m unified_ai.replicator --remote replica_channel
+```
+
+An authentication token and optional encryption key may be supplied to secure
+the transfer.
 
 ## API Endpoints
 

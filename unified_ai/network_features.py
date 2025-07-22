@@ -181,7 +181,6 @@ NETWORK_FEATURES = {
     "geo_fencing_firewall_zones": "Geo-fencing firewall zones \u2013 physical limits",
     "immutable_telemetry_chain": "Immutable telemetry chain \u2013 forensics",
     "taint_tracking_in_flows": "Taint-tracking in flows \u2013 data lineage",
-    "taint_tracking_in_flows": "Taint-tracking in flows \u2013 data lineage",
     "topology_chaos_sim_tool": "Topology chaos sim tool \u2013 disaster drill",
     "kernel_pinned_path_cache": "Kernel-pinned path cache \u2013 route lock",
     "protocol_aware_zeroing_buffer": "Protocol-aware zeroing buffer \u2013 protect remnants",

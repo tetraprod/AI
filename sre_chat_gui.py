@@ -66,7 +66,6 @@ class SREChatGUI(tk.Tk):
         self.output_box.delete("end-2l", "end-1l")  # remove placeholder
         self.output_box.insert(tk.END, f"SRE: {reply}\n")
         self.output_box.see(tk.END)
-=======
 
         # Demonstrate BrainEngine integration
         self.brain.learn(reply)

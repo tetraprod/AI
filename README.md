@@ -7,6 +7,7 @@ WebGPT is a vanilla JS and HTML implementation of a transformer model, intended 
 
 ## UnifiedAI Example
 
+=======
 The repository also contains an example Python implementation of a modular AI system named **UnifiedAI**. See [`UnifiedAI.md`](UnifiedAI.md) for details and the `unified_ai` package for the source code. The example exposes `/query`, `/health`, and `/metrics` endpoints via FastAPI and includes a `NetworkFeatureManager` for optional networking capabilities.
 =======
 =======
@@ -78,7 +79,7 @@ The repository includes a simple Tkinter interface demonstrating the Self-Reflec
 2. Launch the chat GUI:
 
    ```bash
-   python sre_chat_gui.py
+   python united_ai_gui.py
    ```
 
 The chatbot analyzes the tone of your messages with TextBlob and replies with tone-aware responses. Archetype emergence events will be printed in the chat log.
@@ -114,16 +115,19 @@ The AuraEngine reads initial rules from `ethics_rules.json`, which is included h
    ```
 2. Start the UnifiedAI API:
    ```bash
+    python -m unified_ai
+=======
    python -m unified_ai
    ```
-3. Launch the SRE chat GUI:
+3. Launch the UnifiedAI GUI:
    ```bash
-   python sre_chat_gui.py
+   python united_ai_gui.py
    ```
 4. Execute the test suite:
    ```bash
    pytest
    ```
+=======
 =======
 =======
 

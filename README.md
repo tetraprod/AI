@@ -102,6 +102,7 @@ can build on this example.
 
 An example datasheet for an optical engine is loaded at startup to demonstrate
 the memory system. You can find it in `datasheets/optical_engine_datasheet.json`.
+The AuraEngine reads initial rules from `ethics_rules.json`, which is included here for convenience.
 
 ## Running the Modules and Tests
 

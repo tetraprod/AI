@@ -46,8 +46,6 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
    ```bash
    curl -X POST "http://localhost:8000/query" \
         -H "Content-Type: application/json" -d '{"query": "Hello there"}'
-   curl -X POST -H "Content-Type: application/json" \
-        -d '{"message": "Hello there"}' http://localhost:8000/chat
    ```
 
 The request is processed asynchronously. The reply contains an empathetic acknowledgement, demonstrates memory use and the message is published to Redis.

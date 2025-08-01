@@ -20,7 +20,6 @@ The provided context manager automatically invokes `engine.close()` after the
 `yield`, ensuring Redis resources are released. When not using the context
 manager, make sure to `await engine.close()` yourself during application
 shutdown to avoid open connections.
-`yield`, ensuring Redis resources are released.
 UnifiedAI is a modular architecture that combines four engines to provide empathetic interactions, reasoning, high‑speed data processing and ethical oversight.  It exposes a small FastAPI service for demonstration purposes.
 
 ## Components and Intent
@@ -47,8 +46,6 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
    ```bash
    curl -X POST "http://localhost:8000/query" \
         -H "Content-Type: application/json" -d '{"query": "Hello there"}'
-   curl -X POST -H "Content-Type: application/json" \
-        -d '{"message": "Hello there"}' http://localhost:8000/chat
    ```
 
 The request is processed asynchronously. The reply contains an empathetic acknowledgement, demonstrates memory use and the message is published to Redis.

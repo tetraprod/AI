@@ -4,5 +4,9 @@ redis
 uvicorn
 pydantic
 textblob
+vaderSentiment
+spacy
+=======
+=======
 pytest
 pytest-asyncio

@@ -8,6 +8,16 @@ This directory contains a minimal skeleton for an Unreal Engine project. It does
 * Each arm can hold a chain of tokens for dual wielding.
 * Tokens are acquired through combat and target practice.
 
+## Android Multiplayer Controls
+
+Wizard War I can be deployed to Android as a static first-person multiplayer experience.  Players remain stationary and interact through three on-screen buttons:
+
+* **Left Arm** – cast the currently equipped left-hand spell chain.
+* **Right Arm** – cast the currently equipped right-hand spell chain.
+* **Shield** – raise the configured shield chain to mitigate incoming damage.
+
+All other gameplay systems and rules described below remain unchanged.
+
 
 
 

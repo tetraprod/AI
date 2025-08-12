@@ -4,18 +4,13 @@
 #include "SpellEffectToken.h"
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
-=======
-=======
 
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
-=======
 
-=======
 
 #include "Components/PointLightComponent.h"
 #include "Sound/SoundBase.h"
-=======
 
 
 
@@ -34,12 +29,8 @@ public:
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
     class UProjectileMovementComponent* Movement;
 
-=======
-=======
 
-=======
 
-=======
 
 
     /** Dynamic light that follows the spell for improved visuals */
@@ -50,11 +41,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Audio")
     class USoundBase* CastSound;
 
-=======
-=======
 
-=======
-=======
 
 
     /** Configure physics properties based on power, area and effect type */

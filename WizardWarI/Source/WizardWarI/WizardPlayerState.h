@@ -5,7 +5,6 @@
 #include "HellHoundCharacter.h"
 #include "Localization.h"
 #include "ShoutToken.h"
-=======
 #include "WizardPlayerState.generated.h"
 
 USTRUCT(BlueprintType)
@@ -53,7 +52,6 @@ struct FSpellLogEntry
     /** Tokens that make up the spell chain */
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TArray<UToken*> Tokens;
-=======
 };
 
 UCLASS()
@@ -62,7 +60,6 @@ class AWizardPlayerState : public APlayerState
     GENERATED_BODY()
 public:
     AWizardPlayerState();
-=======
     /** Tokens owned by the player */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Tokens")
     TArray<UToken*> TokenInventory;
@@ -159,7 +156,6 @@ public:
      */
     UFUNCTION(BlueprintCallable, Category="Spells")
     bool AddSpellToLog(const FString& SpellName, const TArray<UToken*>& Tokens);
-=======
     /** Visual appearance information */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Appearance")
     FWizardAppearance Appearance;

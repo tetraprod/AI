@@ -53,20 +53,14 @@ struct FEnvironmentEntry
     UPROPERTY(EditAnywhere, BlueprintReadWrite)
     TSubclassOf<AActor> EnvironmentClass;
 };
-=======
-=======
 
-=======
 
 
 #include "Sound/SoundBase.h"
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
-=======
 
-=======
-=======
 #include "WizardWarIGameModeBase.generated.h"
 
 UCLASS()
@@ -84,7 +78,6 @@ public:
     /** Choose and spawn a random combat environment */
     UFUNCTION(BlueprintCallable, Category="Environment")
     void SpawnRandomEnvironment();
-=======
     /** Host a bet match placing tokens as the wager */
     UFUNCTION(BlueprintCallable, Category="Multiplayer")
     bool HostBetMatch(AWizardPlayerState* HostPlayer, const TArray<UToken*>& Tokens);
@@ -97,8 +90,6 @@ public:
     UFUNCTION(BlueprintCallable, Category="Multiplayer")
     void ResolveBet(AWizardPlayerState* Winner, AWizardPlayerState* Loser);
 
-=======
-=======
 
     /** Begin a multiplayer arena battle for up to twenty players */
     UFUNCTION(BlueprintCallable, Category="Arena")
@@ -116,9 +107,6 @@ public:
     UFUNCTION(BlueprintCallable, Category="Arena")
     void ResolveDailyDeathmatch(AWizardPlayerState* Winner);
 
-=======
-=======
-=======
     /** Grant experience based on match duration */
     UFUNCTION(BlueprintCallable, Category="Gameplay")
     void AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds);
@@ -142,7 +130,6 @@ public:
     /** Equip a purchased shout attack */
     UFUNCTION(BlueprintCallable, Category="Store")
     void EquipShoutAttack(AWizardPlayerState* Player, UShoutToken* Token);
-=======
     /** Save the given player's state to a slot */
     UFUNCTION(BlueprintCallable, Category="Save")
     bool SavePlayer(AWizardPlayerState* Player, const FString& SlotName);
@@ -159,11 +146,9 @@ protected:
     /** Tokens wagered by the host */
     UPROPERTY()
     TArray<UToken*> PendingWager;
-=======
 class AWizardWarIGameModeBase : public AGameModeBase
 {
     GENERATED_BODY()
-=======
 
 class AWizardPlayerState;
 
@@ -196,10 +181,7 @@ public:
     UFUNCTION(BlueprintCallable, Category="Save")
     bool LoadPlayer(AWizardPlayerState* Player, const FString& SlotName);
 
-=======
-=======
 
-=======
 
 
     virtual void StartPlay() override;
@@ -230,11 +212,7 @@ public:
 
     /** Look up robe data by name */
     const FRobeData* FindRobe(const FString& Name) const;
-=======
-=======
 
-=======
-=======
 
 
 protected:
@@ -246,8 +224,6 @@ protected:
     UPROPERTY()
     TArray<UToken*> PendingWager;
 
-=======
-=======
 
     /** Active arena state */
     UPROPERTY()
@@ -264,11 +240,6 @@ protected:
     /** Token pool accumulated from arena wagers */
     UPROPERTY()
     TArray<UToken*> ArenaPool;
-=======
-=======
-=======
-=======
-=======
 class AWizardWarIGameModeBase : public AGameModeBase
 {
     GENERATED_BODY()

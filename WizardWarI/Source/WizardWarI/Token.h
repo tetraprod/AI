@@ -20,17 +20,12 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     ETokenType TokenType;
 
-=======
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Token")
     ETokenType TokenType;
 
-=======
-
-=======
 
 
-=======
-=======
+
 
 
 
@@ -50,16 +45,9 @@ public:
     /** Glow colour used when displaying the token */
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Visual")
     FLinearColor GlowColor;
-=======
-=======
 
-=======
 
-=======
-=======
 
-=======
-=======
 
 
 

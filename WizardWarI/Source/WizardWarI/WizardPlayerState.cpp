@@ -14,7 +14,6 @@ AWizardPlayerState::AWizardPlayerState()
     EquippedShoutAttack = nullptr;
     CustomTauntMessage = TEXT("For glory!");
 }
-=======
 
 void AWizardPlayerState::AddExperience(int32 Amount)
 {
@@ -103,4 +102,3 @@ void AWizardPlayerState::SetCustomTaunt(const FString& Message)
 {
     CustomTauntMessage = Message;
 }
-=======

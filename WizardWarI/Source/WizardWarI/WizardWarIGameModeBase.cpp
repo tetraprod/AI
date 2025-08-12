@@ -44,14 +44,9 @@ AWizardWarIGameModeBase::AWizardWarIGameModeBase()
     Mountain.Type = ECombatEnvironment::MountainTop;
     AvailableEnvironments.Add(Mountain);
 }
-=======
-=======
-
-=======
 
 
-=======
-=======
+
 
 
 
@@ -115,8 +110,6 @@ void AWizardWarIGameModeBase::ResolveBet(AWizardPlayerState* Winner, AWizardPlay
     PendingWager.Empty();
 }
 
-=======
-=======
 
 bool AWizardWarIGameModeBase::StartArenaBattle()
 {
@@ -190,9 +183,6 @@ void AWizardWarIGameModeBase::ResolveDailyDeathmatch(AWizardPlayerState* Winner)
     ArenaPool.Empty();
 }
 
-=======
-=======
-=======
 
 void AWizardWarIGameModeBase::AwardMatchXP(AWizardPlayerState* Player, float MatchLengthSeconds)
 {
@@ -306,7 +296,6 @@ void AWizardWarIGameModeBase::EquipShoutAttack(AWizardPlayerState* Player, UShou
     Player->EquippedShoutAttack = Token;
 }
 
-=======
 bool AWizardWarIGameModeBase::SavePlayer(AWizardPlayerState* Player, const FString& SlotName)
 {
     if (!Player)
@@ -340,7 +329,6 @@ bool AWizardWarIGameModeBase::SavePlayer(AWizardPlayerState* Player, const FStri
     SaveGame->OwnedShoutAttacks = Player->OwnedShoutAttacks;
     SaveGame->EquippedShoutAttack = Player->EquippedShoutAttack;
     SaveGame->CustomTauntMessage = Player->CustomTauntMessage;
-=======
     SaveGame->SkinColor = Player->SkinColor;
     SaveGame->HairColor = Player->HairColor;
     SaveGame->Height = Player->Height;
@@ -384,7 +372,6 @@ bool AWizardWarIGameModeBase::LoadPlayer(AWizardPlayerState* Player, const FStri
         Player->OwnedShoutAttacks = SaveGame->OwnedShoutAttacks;
         Player->EquippedShoutAttack = SaveGame->EquippedShoutAttack;
         Player->CustomTauntMessage = SaveGame->CustomTauntMessage;
-=======
         Player->SkinColor = SaveGame->SkinColor;
         Player->HairColor = SaveGame->HairColor;
         Player->Height = SaveGame->Height;
@@ -409,12 +396,7 @@ void AWizardWarIGameModeBase::SpawnRandomEnvironment()
         ActiveEnvironment = GetWorld()->SpawnActor<AActor>(Entry.EnvironmentClass, Params);
     }
 }
-=======
-=======
 
-=======
-=======
-=======
 
 
 
@@ -430,20 +412,14 @@ void AWizardWarIGameModeBase::StartPlay()
         GetWorld()->SpawnActor<ACastleHub>(HomeCastleClass);
     }
     SpawnRandomEnvironment();
-=======
     if (GEngine)
     {
         // Lock the game to 60 FPS for smoother play
         GEngine->Exec(GetWorld(), TEXT("t.MaxFPS 60"));
     }
 }
-=======
-=======
 }
 
-=======
-=======
-=======
 
 
 

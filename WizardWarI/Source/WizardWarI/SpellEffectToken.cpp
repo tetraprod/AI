@@ -47,13 +47,9 @@ USpellEffectToken::USpellEffectToken()
         GlowColor = FLinearColor::White;
         break;
     }
-=======
-=======
 
     FacialExpression = nullptr;
-=======
 
-=======
     FacialExpression = nullptr;
 
 

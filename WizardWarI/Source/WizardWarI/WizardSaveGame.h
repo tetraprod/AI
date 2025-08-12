@@ -5,7 +5,6 @@
 #include "WizardPlayerState.h"
 #include "ShoutToken.h"
 #include "Localization.h"
-=======
 #include "WizardSaveGame.generated.h"
 
 UCLASS()
@@ -72,5 +71,4 @@ public:
 
     UPROPERTY()
     ELanguage PreferredLanguage;
-=======
 };

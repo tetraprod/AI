@@ -9,4 +9,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD ["python", "unifiedai.py"]
+CMD ["python", "unified_ai.py"]

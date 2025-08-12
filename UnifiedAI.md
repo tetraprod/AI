@@ -47,7 +47,7 @@ The orchestrator coordinates these engines so that input flows through AuraEngin
 2. Start a local Redis server (required for the OpticalEngine).
 3. Run the API server:
    ```bash
-   python unifiedai.py
+   python unified_ai.py
    ```
 4. Interact with the system using `curl` or any HTTP client:
    ```bash

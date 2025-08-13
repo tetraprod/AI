@@ -26,6 +26,42 @@ start:
     jmp .print_loop
 .print_done:
 
+    ; Simple hardware checks and terminal
+
+    ; Initialize mouse via BIOS Int 33h
+    xor ax, ax
+    int 0x33
+    cmp ax, 0xffff
+    jne .no_mouse
+    mov si, mouse_ok
+    call print_bios
+    jmp .after_mouse
+.no_mouse:
+    mov si, mouse_fail
+    call print_bios
+.after_mouse:
+
+    ; Inform about Bluetooth
+    mov si, bt_msg
+    call print_bios
+
+    ; Basic terminal: wait for Enter, echo keys
+    mov si, prompt_msg
+    call print_bios
+    mov di, input_buf
+.read_loop:
+    mov ah, 0
+    int 0x16
+    cmp al, 0x0d
+    je .read_done
+    stosb
+    mov ah, 0x0e
+    mov bh, 0
+    mov bl, 0x07
+    int 0x10
+    jmp .read_loop
+.read_done:
+
     ; Enable A20 via port 0x92
     in al, 0x92
     or al, 2
@@ -73,6 +109,11 @@ disk_error:
     jmp .halt
 
 hello_msg db 'Hello OS',0
+mouse_ok db 0x0d,0x0a,'Mouse detected',0
+mouse_fail db 0x0d,0x0a,'No mouse found',0
+bt_msg db 0x0d,0x0a,'Bluetooth requires OS driver',0
+prompt_msg db 0x0d,0x0a,'Type then press Enter to boot: ',0
+input_buf times 64 db 0
 boot_drive db 0
 
 KERNEL_LOAD_ADDR equ 0x00100000
@@ -95,6 +136,21 @@ gdt_end:
 gdt_desc:
     dw gdt_end - gdt_start - 1
     dd gdt_start
+
+print_bios:
+    pusha
+.next:
+    lodsb
+    or al, al
+    jz .done
+    mov ah, 0x0e
+    mov bh, 0
+    mov bl, 0x07
+    int 0x10
+    jmp .next
+.done:
+    popa
+    ret
 
 ; Pad and signature
     times 510 - ($ - $$) db 0

@@ -12,16 +12,17 @@ start:
 
     mov [boot_drive], dl
 
-    ; Print message
+    ; Print message in VGA text mode (0xb8000)
     mov si, hello_msg
-    mov di, 0xb8000
+    mov ax, 0xb800
+    mov es, ax
+    xor di, di
 .print_loop:
     lodsb
     or al, al
     jz .print_done
     mov ah, 0x07
-    mov [di], ax
-    add di, 2
+    stosw
     jmp .print_loop
 .print_done:
 
@@ -31,7 +32,8 @@ start:
     out 0x92, al
 
     ; Setup disk address packet
-    mov word [dap], 0x10        ; size
+    mov byte [dap], 0x10        ; size of packet
+    mov byte [dap+1], 0         ; reserved
     mov word [dap+2], 32        ; number of sectors to read
     mov dword [dap+4], KERNEL_LOAD_ADDR ; load address
     mov dword [dap+8], 1        ; starting LBA (skip boot sector)
@@ -50,9 +52,11 @@ start:
     mov eax, cr0
     or eax, 1
     mov cr0, eax
+    jmp CODE_SEL:protected
 
 [bits 32]
 protected:
+    mov ax, DATA_SEL
     mov ds, ax
     mov es, ax
     mov fs, ax

@@ -1,0 +1,10 @@
+# Ignore build artifacts
+*.jar
+*.apk
+
+# Gradle wrapper files that should be generated automatically
+**/gradle-wrapper.jar
+
+# Generic build directories
+build/
+**/build/

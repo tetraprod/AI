@@ -38,3 +38,7 @@ prompts = get_prompts('es')
 ```
 
 The default language is English if an unknown code is provided.
+
+## Gradle Wrapper
+
+If you use the optional Gradle-based tooling in this repository, run `./gradlew` after cloning. The wrapper will automatically download `gradle-wrapper.jar` and continue executing your command. The JAR file is not tracked in version control, so the download happens the first time you run the wrapper.

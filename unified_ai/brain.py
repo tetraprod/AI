@@ -9,6 +9,11 @@ class BrainEngine:
     def __init__(self, db_path: str = "brain.db") -> None:
         self.db_path = db_path
         self.logger = logging.getLogger(self.__class__.__name__)
+        self.db: Optional[aiosqlite.Connection] = None
+        self.rules = {
+            "productivity": "Try time-blocking and prioritizing tasks with a Pomodoro technique.",
+            "learning": "Consider spaced repetition and hands-on projects.",
+        }
 
     async def initialize(self) -> None:
         self.db = await aiosqlite.connect(self.db_path)
@@ -16,12 +21,10 @@ class BrainEngine:
             "CREATE TABLE IF NOT EXISTS memories (key TEXT PRIMARY KEY, content TEXT, timestamp TEXT, access_count INTEGER)"
         )
         await self.db.commit()
-        self.rules = {
-            "productivity": "Try time-blocking and prioritizing tasks with a Pomodoro technique.",
-            "learning": "Consider spaced repetition and hands-on projects.",
-        }
 
     async def store_memory(self, key: str, value: str) -> None:
+        if not self.db:
+            return
         try:
             await self.db.execute(
                 "INSERT OR REPLACE INTO memories (key, content, timestamp, access_count) VALUES (?, ?, datetime('now'), COALESCE((SELECT access_count FROM memories WHERE key = ?),0))",
@@ -32,6 +35,8 @@ class BrainEngine:
             self.logger.error("Storing memory failed: %s", exc)
 
     async def retrieve_memory(self, key: str) -> Optional[str]:
+        if not self.db:
+            return None
         try:
             async with self.db.execute(
                 "SELECT content, access_count FROM memories WHERE key = ?",
@@ -72,9 +77,12 @@ class BrainEngine:
             return False
 
     async def memory_count(self) -> int:
+        if not self.db:
+            return 0
         async with self.db.execute("SELECT COUNT(*) FROM memories") as cursor:
             row = await cursor.fetchone()
             return row[0] if row else 0
 
     async def close(self) -> None:
-        await self.db.close()
+        if self.db:
+            await self.db.close()

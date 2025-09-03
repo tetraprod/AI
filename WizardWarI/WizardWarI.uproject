@@ -3,6 +3,10 @@
     "EngineAssociation": "5.0",
     "Category": "Games",
     "Description": "Wizard War I - Spell combat game skeleton",
+    "TargetPlatforms": [
+        "Android",
+        "Win64"
+    ],
     "Modules": [
         {
             "Name": "WizardWarI",

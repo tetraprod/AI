@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UnifAI Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 40px auto; }
+        #log { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; }
+        #inputArea { margin-top: 10px; display: flex; }
+        #message { flex: 1; }
+    </style>
+</head>
+<body>
+    <h1>UnifAI Chatbot</h1>
+    <div id="log"></div>
+    <div id="inputArea">
+        <input type="text" id="message" placeholder="Say something" />
+        <button id="send">Send</button>
+    </div>
+    <script>
+        const log = document.getElementById('log');
+        const input = document.getElementById('message');
+        document.getElementById('send').onclick = async () => {
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            log.innerHTML += `<div><strong>You:</strong> ${text}</div>`;
+            const res = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+            const data = await res.json();
+            log.innerHTML += `<div><strong>Bot:</strong> ${data.reply}</div>`;
+            log.scrollTop = log.scrollHeight;
+        };
+    </script>
+</body>
+</html>

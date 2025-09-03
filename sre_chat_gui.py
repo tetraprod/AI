@@ -95,7 +95,6 @@ class SREChatGUI(tk.Tk):
 =======
         self.output_box.insert(tk.END, f"SRE: {reply}\n")
         self.output_box.see(tk.END)
-=======
 
         # Demonstrate BrainEngine integration
         self.brain.learn(reply)

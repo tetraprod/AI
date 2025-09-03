@@ -6,6 +6,7 @@ pydantic
 textblob
 vaderSentiment
 spacy
+psutil
 =======
 =======
 pytest

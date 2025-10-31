@@ -17,19 +17,7 @@ class SystemReplicator:
 
     async def _snapshot(self) -> dict[str, Any]:
         """Collect BrainEngine memories and enabled features."""
-        memories: list[dict[str, Any]] = []
-        async with self.engine.brain.db.execute(
-            "SELECT key, content, timestamp, access_count FROM memories"
-        ) as cursor:
-            async for row in cursor:
-                memories.append(
-                    {
-                        "key": row[0],
-                        "content": row[1],
-                        "timestamp": row[2],
-                        "access_count": row[3],
-                    }
-                )
+        memories = await self.engine.brain.export_memories()
         return {"memories": memories, "features": list(self.engine.feature_manager.enabled)}
 
     def _secure(self, data: Any) -> str:

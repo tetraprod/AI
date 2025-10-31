@@ -2,7 +2,11 @@ import asyncio
 import logging
 from contextlib import asynccontextmanager
 from typing import Any, AsyncGenerator, Optional
-import redis.asyncio as redis
+
+try:  # pragma: no cover - optional dependency
+    import redis.asyncio as redis
+except ModuleNotFoundError:  # pragma: no cover - used in tests
+    from . import _redis_stub as redis
 
 from .soul import SoulEngine
 from .brain import BrainEngine

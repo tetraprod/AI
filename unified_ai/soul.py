@@ -1,10 +1,11 @@
 import logging
-from textblob import TextBlob
 
-try:
+try:  # pragma: no cover - optional dependency
     from transformers import pipeline
 except Exception:  # pragma: no cover - optional dependency
     pipeline = None
+
+from .simple_sentiment import analyse_text
 
 
 class SoulEngine:
@@ -29,10 +30,10 @@ class SoulEngine:
             except Exception as exc:  # pragma: no cover - defensive
                 self.logger.error("Emotion analysis failed: %s", exc)
                 return "neutral"
-        polarity = TextBlob(text).sentiment.polarity
-        if polarity > 0.2:
+        signals = analyse_text(text)
+        if signals.score > 0:
             return "positive"
-        if polarity < -0.2:
+        if signals.score < 0:
             return "negative"
         return "neutral"
 

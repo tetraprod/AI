@@ -2,12 +2,9 @@ from typing import List, Dict, Optional
 from dataclasses import dataclass
 import uuid
 import random
-from textblob import TextBlob
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import spacy
+import re
 
-sentiment_analyzer = SentimentIntensityAnalyzer()
-nlp = spacy.load("en_core_web_sm")
+from unified_ai.simple_sentiment import analyse_text, tone_from_signals, top_tokens
 # ----------------------------
 # EMOTIONAL CORE REPRESENTATION
 # ----------------------------
@@ -121,37 +118,25 @@ class VisitorMemory:
 # ----------------------------
 
 def core_from_text(text: str) -> EmotionalCore:
-    """Create an EmotionalCore from raw text with expanded tone detection."""
-    doc = nlp(text)
-    words = [token.text for token in doc if token.is_alpha]
-    noun_chunks = [chunk.text for chunk in doc.noun_chunks]
+    """Create an :class:`EmotionalCore` using lightweight heuristics."""
 
-    blob = TextBlob(text)
-    polarity = blob.sentiment.polarity
-    subjectivity = blob.sentiment.subjectivity
-    vader_scores = sentiment_analyzer.polarity_scores(text)
-    compound = vader_scores["compound"]
+    signals = analyse_text(text)
+    tone = tone_from_signals(signals, text)
+    words = top_tokens(signals.tokens, limit=8)
 
-    tone = "neutral"
-    if "?" in text and abs(compound) < 0.2:
-        tone = "curious"
-    elif compound >= 0.6:
-        tone = "excited"
-    elif compound >= 0.2:
-        tone = "positive"
-    elif compound <= -0.6:
-        tone = "anxious"
-    elif compound <= -0.2:
-        tone = "negative"
-
-    certainty = (abs(compound) + (1 - subjectivity)) / 2
+    # Treat capitalised words as rough noun proxies for metaphor extraction.
+    noun_candidates = [
+        match.group(0)
+        for match in re.finditer(r"\b[A-Z][a-zA-Z]+\b", text)
+    ]
+    metaphor_field = top_tokens(noun_candidates or signals.tokens, limit=5)
 
     return EmotionalCore(
         visitor_id=str(uuid.uuid4()),
         tone_bias=tone,
-        subjectivity=subjectivity,
-        certainty=certainty,
-        metaphor_field=noun_chunks[:5] or words[:5] or ["echo"],
+        subjectivity=signals.subjectivity,
+        certainty=signals.certainty,
+        metaphor_field=metaphor_field,
         emotional_arc="conversation",
         archetype_affinity={},
         subversion_resistance=random.uniform(0.4, 0.9),

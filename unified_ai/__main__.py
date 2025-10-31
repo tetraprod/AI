@@ -2,8 +2,11 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException, Request
-from pydantic import BaseModel
-import uvicorn
+
+try:  # pragma: no cover - optional dependency
+    import uvicorn
+except ModuleNotFoundError:  # pragma: no cover - used in tests
+    uvicorn = None
 
 from . import UnifiedAI, lifespan as engine_lifespan
 
@@ -17,14 +20,14 @@ async def app_lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=app_lifespan)
 
-class QueryModel(BaseModel):
-    query: str
-
 @app.post("/query")
-async def query_endpoint(payload: QueryModel, request: Request):
+async def query_endpoint(payload: dict, request: Request):
     ai: UnifiedAI = request.app.state.engine
+    query = payload.get("query") if isinstance(payload, dict) else None
+    if not isinstance(query, str):
+        raise HTTPException(status_code=400, detail="Invalid query payload")
     try:
-        response = await ai.interact(payload.query)
+        response = await ai.interact(query)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
     return {"response": response}
@@ -42,6 +45,8 @@ async def metrics_endpoint(request: Request):
     return {"memory_count": mem_count, "network_features": ai.list_enabled_features()}
 
 def main() -> None:
+    if not uvicorn:
+        raise RuntimeError("uvicorn is not available in this environment")
     uvicorn.run("unified_ai.__main__:app", host="0.0.0.0", port=8000)
 
 

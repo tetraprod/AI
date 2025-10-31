@@ -1,6 +1,10 @@
 import logging
 from typing import Any, AsyncGenerator
-import redis.asyncio as redis
+
+try:  # pragma: no cover - optional dependency
+    import redis.asyncio as redis
+except ModuleNotFoundError:  # pragma: no cover - used in tests
+    from . import _redis_stub as redis
 
 from .network_features import NetworkFeatureManager
 

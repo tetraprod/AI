@@ -1,0 +1,2 @@
+Attempted to run `git pull` on branch `work`.
+Result: No tracking information for the current branch. Configure upstream to enable pulling.
